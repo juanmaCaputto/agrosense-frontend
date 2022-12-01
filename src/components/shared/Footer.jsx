@@ -17,7 +17,7 @@ export function Footer() {
                     spacing={1}
                     sx={{ p: 0 }}
                     style={{
-                        backgroundColor: "#DFFFD8",
+                        backgroundColor: "#95CAFF",
                         flexDirection: "column",
                     }}
                 >
@@ -44,13 +44,13 @@ export function Footer() {
                         >
                             <Typography
                                 variant="body2"
-                                style={{ color: "black" }}
+                                style={{ color: "white" }}
                             >
                                 Agrosense Test
                             </Typography>
                             <Typography
                                 variant="caption"
-                                style={{ color: "black" }}
+                                style={{ color: "white" }}
                             >
                                 v0.1
                                 <br />

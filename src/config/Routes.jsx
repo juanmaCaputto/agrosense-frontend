@@ -1,3 +1,4 @@
 export const routes = {
-    DASHBOARD: "/"
+    DASHBOARD: "realtime",
+    HISTORIC: "historic"
 };

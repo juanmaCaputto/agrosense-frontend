@@ -1,10 +1,10 @@
 import { Grid, Typography } from "@mui/material";
-import InfoCard from "../components/shared/InfoCard";
+import InfoCard from "../../components/shared/InfoCard";
 
 export default function Dashboard() {
     return (
         <>
-            <Grid container sx={{ marginTop: "40px" }}>
+            <Grid container sx={{ marginTop: "100px" }}>
                 <Grid item xs={6} sx={{ mb: 2 }}>
                     <InfoCard>
                         <Grid
