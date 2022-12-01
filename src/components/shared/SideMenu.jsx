@@ -13,7 +13,6 @@ import ListItemText from "@mui/material/ListItemText";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { routes } from "../../config/Routes";
-import RouteContext from "../../context/RouteContext";
 import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -66,8 +65,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideMenu({ setOpen, open }) {
-    const ctx = React.useContext(RouteContext);
-
     const theme = useTheme();
 
     return (
@@ -87,11 +84,7 @@ export default function SideMenu({ setOpen, open }) {
                     <ListItem
                         key={text}
                         onClick={() => setOpen(false)}
-                        to={
-                            index === 0
-                                ? routes.DASHBOARD
-                                : routes.HISTORIC
-                        }
+                        to={index === 0 ? routes.DASHBOARD : routes.HISTORIC}
                         disablePadding
                         sx={{ display: "block", color: "black" }}
                         component={NavLink}

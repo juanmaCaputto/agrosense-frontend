@@ -23,7 +23,7 @@ export default function Historic() {
                         </Grid>
                     </InfoCard>
                 </Grid>
-            </Grid>{" "}
+            </Grid>
         </>
     );
 }
