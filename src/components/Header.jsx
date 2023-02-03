@@ -1,11 +1,11 @@
 import { CssBaseline, IconButton, Typography } from "@mui/material";
-import MuiAppBar from '@mui/material/AppBar';
+import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import SideMenu from "./SideMenu";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 export function Header() {
     const [counter, setCounter] = useState(0);
