@@ -9,6 +9,8 @@ import { useSensors } from "../../hooks/useSensors";
 import SensorsContext from "../../context/sensorsContext";
 import InfoCard from "../../components/shared/InfoCard";
 import { getCurrentDate } from "../../util/GetCurrentDate";
+import SubParameterCard from "../../components/shared/SubParameterCard";
+import BackCard from "../../components/shared/BackCard";
 
 export default function RealTime() {
     const { setCurrentValues, humedadSueloH } = useSensors();
@@ -43,16 +45,24 @@ export default function RealTime() {
                 <ParameterCard
                     title="Humedad de suelo"
                     value={`${ctx.currentAvgValues.humedadSueloTotal}%`}
-                />
+                >
+                    <BackCard />
+                </ParameterCard>
                 <ParameterCard
                     title="Humedad Ambiente"
                     value={`${ctx.currentAvgValues.humedadAmbiente}%`}
-                />
-                <ParameterCard title="Clima" value={weatherIcon()} />
+                >
+                    <BackCard />
+                </ParameterCard>
+                <ParameterCard title="Clima" value={weatherIcon()}>
+                    <BackCard />
+                </ParameterCard>
                 <ParameterCard
                     title="Temperatura"
                     value={`${ctx.currentAvgValues.tempAmbiente}°C`}
-                />
+                >
+                    <BackCard />
+                </ParameterCard>
                 <Grid container item xs={12} sm={6} sx={{ pl: 2 }}>
                     <Typography variant="subtitle2">
                         Última actualización: {fechaActualizacion}
