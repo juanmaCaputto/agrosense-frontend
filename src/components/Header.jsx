@@ -6,17 +6,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import SideMenu from "./SideMenu";
 import { styled } from "@mui/material/styles";
+import SideMenuMobile from "./SideMenuMobile";
+import { useMediaQuery } from "react-responsive";
 
 export function Header() {
+    const isSmall = useMediaQuery({ query: "(max-width: 576px)" });
     const [counter, setCounter] = useState(0);
     const [open, setOpen] = useState(false);
 
-    const setOpenSorpresa = (e) => {
-        setOpen(e);
-        if (e && counter < 5) {
+    const setOpenSorpresa = (newValue) => {
+        console.log(newValue)
+        setOpen(newValue);
+        if (newValue && counter < 5) {
             console.log("me abriste! :D");
             setCounter(counter + 1);
-        } else if (!e && counter < 5) {
+        } else if (!newValue && counter < 5) {
             console.log("me cerraste... :(");
         } else if (counter === 5) {
             setCounter(counter + 1);
@@ -61,7 +65,7 @@ export function Header() {
                         <MenuIcon />
                     </IconButton>
                     <Grid container>
-                        <Grid item xs={6} md={2}>
+                        <Grid item xs={8} md={2}>
                             <Typography
                                 variant="h6"
                                 noWrap
@@ -70,20 +74,41 @@ export function Header() {
                                     color: "#F7FBFF",
                                 }}
                             >
-                                <img
-                                    src={
-                                        process.env.PUBLIC_URL +
-                                        "/logo-full-agrosense.png"
-                                    }
-                                    style={{ paddingTop: "15px", width: "60%" }}
-                                    alt="Logo"
-                                />
+                                {!isSmall || (isSmall && !open) ? (
+                                    <img
+                                        src={
+                                            process.env.PUBLIC_URL +
+                                            "/logo-full-agrosense.png"
+                                        }
+                                        style={{
+                                            paddingTop: "15px",
+                                            width: "60%",
+                                        }}
+                                        alt="Logo"
+                                    />
+                                ) : (
+                                    <img
+                                        src={
+                                            process.env.PUBLIC_URL +
+                                            "/logo-agrosense.png"
+                                        }
+                                        style={{
+                                            paddingTop: "10px",
+                                            width: "30%",
+                                        }}
+                                        alt="Logo"
+                                    />
+                                )}
                             </Typography>
                         </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <SideMenu setOpen={setOpenSorpresa} open={open} />
+            {isSmall ? (
+                <SideMenuMobile setOpen={setOpenSorpresa} open={open} />
+            ) : (
+                <SideMenu setOpen={setOpenSorpresa} open={open} />
+            )}
         </Box>
     );
 }

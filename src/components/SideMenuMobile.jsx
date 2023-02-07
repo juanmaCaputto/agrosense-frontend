@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -44,33 +44,17 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
 }));
 
-const Drawer = styled(SwipeableDrawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    ...(open && {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && {
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
-    }),
-}));
-
-export default function SideMenu({ setOpen, open }) {
+export default function SideMenuMobile({ setOpen, open }) {
+    console.log(open)
     const theme = useTheme();
 
-    const toggleDrawer = (openNew) => (event) => {
+    const toggleDrawer = (event) => {
         if (
             event &&
             event.type === "keydown" &&
@@ -78,23 +62,26 @@ export default function SideMenu({ setOpen, open }) {
         ) {
             return;
         }
-        console.log(openNew);
-        setOpen(openNew);
     };
+
     return (
-        <Drawer
-            variant={"permanent"}
+        <SwipeableDrawer
+            sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                "& .MuiDrawer-paper": {
+                    width: drawerWidth,
+                    boxSizing: "border-box",
+                },
+            }}
+            variant={"persistent"}
             anchor="left"
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
+            onClose={toggleDrawer()}
+            onOpen={toggleDrawer()}
             open={open}
         >
             <DrawerHeader>
-                <IconButton
-                    onClick={() => {
-                        setOpen(!open);
-                    }}
-                >
+                <IconButton onClick={() => setOpen(!open)}>
                     {theme.direction === "rtl" ? (
                         <ChevronRightIcon />
                     ) : (
@@ -103,7 +90,7 @@ export default function SideMenu({ setOpen, open }) {
                 </IconButton>
             </DrawerHeader>
             <Divider />
-            <List>
+            <List sx={{ textDecoration: "none" }}>
                 {["Tiempo Real", "Histórico", "Alarmas", "Información"].map(
                     (text, index) => (
                         <ListItem
@@ -125,37 +112,19 @@ export default function SideMenu({ setOpen, open }) {
                             }}
                             component={NavLink}
                         >
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? "initial" : "center",
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 0,
-                                        justifyContent: "center",
-                                    }}
-                                >
+                            <ListItemButton>
+                                <ListItemIcon>
                                     {index === 0 && <PlayCircleOutlineIcon />}
                                     {index === 1 && <EqualizerIcon />}
                                     {index === 2 && <AccessAlarmIcon />}
                                     {index === 3 && <InfoIcon />}
                                 </ListItemIcon>
-                                <ListItemText
-                                    primary={text}
-                                    sx={{
-                                        opacity: open ? 1 : 0,
-                                        textDecoration: "none",
-                                    }}
-                                />
+                                <ListItemText primary={text} />
                             </ListItemButton>
                         </ListItem>
                     )
                 )}
             </List>
-        </Drawer>
+        </SwipeableDrawer>
     );
 }
