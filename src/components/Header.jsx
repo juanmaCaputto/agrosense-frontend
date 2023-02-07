@@ -10,17 +10,16 @@ import SideMenuMobile from "./SideMenuMobile";
 import { useMediaQuery } from "react-responsive";
 
 export function Header() {
-    const isSmall = useMediaQuery({ query: "(max-width: 576px)" });
+    const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     const [counter, setCounter] = useState(0);
     const [open, setOpen] = useState(false);
 
-    const setOpenSorpresa = (newValue) => {
-        console.log(newValue)
-        setOpen(newValue);
-        if (newValue && counter < 5) {
+    const setOpenSorpresa = (openNew) => {
+        setOpen(openNew);
+        if (openNew && counter < 5) {
             console.log("me abriste! :D");
             setCounter(counter + 1);
-        } else if (!newValue && counter < 5) {
+        } else if (!openNew && counter < 5) {
             console.log("me cerraste... :(");
         } else if (counter === 5) {
             setCounter(counter + 1);
@@ -54,7 +53,7 @@ export function Header() {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={setOpenSorpresa}
+                        onClick={() => setOpenSorpresa(!open)}
                         edge="start"
                         sx={{
                             marginRight: 5,
@@ -65,7 +64,7 @@ export function Header() {
                         <MenuIcon />
                     </IconButton>
                     <Grid container>
-                        <Grid item xs={8} md={2}>
+                        <Grid item xs={8} sm={2}>
                             <Typography
                                 variant="h6"
                                 noWrap

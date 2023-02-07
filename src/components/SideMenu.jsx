@@ -15,8 +15,7 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { routes } from "../config/Routes";
 import { NavLink } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import { SwipeableDrawer } from "@mui/material";
+import MuiDrawer from "@mui/material/Drawer";
 
 const drawerWidth = 240;
 
@@ -50,7 +49,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     ...theme.mixins.toolbar,
 }));
 
-const Drawer = styled(SwipeableDrawer, {
+const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
     width: drawerWidth,
@@ -70,25 +69,8 @@ const Drawer = styled(SwipeableDrawer, {
 export default function SideMenu({ setOpen, open }) {
     const theme = useTheme();
 
-    const toggleDrawer = (openNew) => (event) => {
-        if (
-            event &&
-            event.type === "keydown" &&
-            (event.key === "Tab" || event.key === "Shift")
-        ) {
-            return;
-        }
-        console.log(openNew);
-        setOpen(openNew);
-    };
     return (
-        <Drawer
-            variant={"permanent"}
-            anchor="left"
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-            open={open}
-        >
+        <Drawer variant={"permanent"} open={open}>
             <DrawerHeader>
                 <IconButton
                     onClick={() => {

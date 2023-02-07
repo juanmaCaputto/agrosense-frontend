@@ -12,13 +12,13 @@ export default function InfoCard({
     title = "",
     children,
 }) {
-    const isSmall = useMediaQuery({ query: "(max-width: 576px)" });
+    const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     document.body.style = "background:#F7F7F7";
 
     let styleSxPaper = {
         minHeight,
         minWidth,
-        maxWidth: width
+        maxWidth: width,
     };
 
     if (isSmall) {
@@ -30,14 +30,25 @@ export default function InfoCard({
         <Grid container sx={{ marginTop }}>
             <Paper elevation={isSmall ? 0 : 3} sx={styleSxPaper}>
                 <Box
-                    style={{
-                        backgroundColor: "#F7FBFF",
-                        borderRadius: "15px",
-                        paddingTop: "15px",
-                        paddingLeft: "40px",
-                        paddingRight: "40px",
-                        paddingBottom: "10px",
-                    }}
+                    style={
+                        !isSmall
+                            ? {
+                                  backgroundColor: "#F7FBFF",
+                                  borderRadius: "15px",
+                                  paddingTop: "15px",
+                                  paddingLeft: "40px",
+                                  paddingRight: "40px",
+                                  paddingBottom: "10px",
+                              }
+                            : {
+                                  backgroundColor: "#F7FBFF",
+                                  borderRadius: "15px",
+                                  paddingTop: "15px",
+                                  paddingLeft: "5px",
+                                  paddingRight: "5px",
+                                  paddingBottom: "10px",
+                              }
+                    }
                 >
                     <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
                         {title !== "" && (
@@ -55,10 +66,7 @@ export default function InfoCard({
                                         {title}
                                     </Typography>
                                 </Grid>
-                                <Grid
-                                    item
-                                    xs={12}
-                                >
+                                <Grid item xs={12}>
                                     <Divider />
                                 </Grid>
                             </>

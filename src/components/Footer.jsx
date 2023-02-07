@@ -25,7 +25,7 @@ export function Footer() {
                         container
                         item
                         xs={12}
-                        md={6}
+                        sm={6}
                         direction="row"
                         alignItems="center"
                     >
@@ -35,7 +35,7 @@ export function Footer() {
                         <Grid
                             item
                             xs={6}
-                            md={6}
+                            sm={6}
                             container
                             direction="column"
                             justifyContent="start"

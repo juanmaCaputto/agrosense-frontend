@@ -1,5 +1,6 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import HistoricSensorGraph from "../../components/historic/HistoricSensorGraph";
 import InfoCard from "../../components/shared/InfoCard";
 import SelectDate from "../../components/shared/SelectDate";
@@ -14,13 +15,14 @@ const sensorValues = [
 ];
 
 export default function Historic() {
+    const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     const [parameter, setParameter] = useState("");
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
 
     return (
         <InfoCard minWidth="100%" title="Histórico de Sensores">
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={4}>
                 <SelectOpcion
                     opciones={sensorValues}
                     title={"Parámetro"}
@@ -38,14 +40,22 @@ export default function Historic() {
                     title={"End Date"}
                 />
             </Grid>
+            {isSmall && <Grid item xs={1} />}
             <Grid
                 item
-                xs={12}
-                md={8}
-                sx={{
-                    textAlign: "center",
-                    padding: "20px",
-                }}
+                xs={10}
+                sm={8}
+                sx={
+                    !isSmall
+                        ? {
+                              textAlign: "center",
+                              padding: "20px",
+                          }
+                        : {
+                              textAlign: "center",
+                              paddingTop: "20px",
+                          }
+                }
             >
                 <HistoricSensorGraph
                     title="HISTORICO DE SENSORES"
@@ -54,6 +64,7 @@ export default function Historic() {
                     end={dateEnd}
                 />
             </Grid>
+            {isSmall && <Grid item xs={1} />}
         </InfoCard>
     );
 }

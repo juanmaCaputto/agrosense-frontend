@@ -16,7 +16,7 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { routes } from "../config/Routes";
 import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { SwipeableDrawer } from "@mui/material";
+import { Drawer, SwipeableDrawer } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -51,21 +51,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function SideMenuMobile({ setOpen, open }) {
-    console.log(open)
     const theme = useTheme();
 
-    const toggleDrawer = (event) => {
-        if (
-            event &&
-            event.type === "keydown" &&
-            (event.key === "Tab" || event.key === "Shift")
-        ) {
-            return;
-        }
-    };
-
     return (
-        <SwipeableDrawer
+        <Drawer
             sx={{
                 width: drawerWidth,
                 flexShrink: 0,
@@ -75,9 +64,6 @@ export default function SideMenuMobile({ setOpen, open }) {
                 },
             }}
             variant={"persistent"}
-            anchor="left"
-            onClose={toggleDrawer()}
-            onOpen={toggleDrawer()}
             open={open}
         >
             <DrawerHeader>
@@ -125,6 +111,6 @@ export default function SideMenuMobile({ setOpen, open }) {
                     )
                 )}
             </List>
-        </SwipeableDrawer>
+        </Drawer>
     );
 }

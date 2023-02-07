@@ -20,7 +20,7 @@ export function SelectOpcion({
     };
 
     return (
-        <Grid item xs={xmSize} md={mdSize}>
+        <Grid item xs={xmSize} sm={mdSize}>
             <FormControl
                 fullWidth
                 variant={variant}

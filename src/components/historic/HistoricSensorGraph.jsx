@@ -15,6 +15,7 @@ import {
 import "chartjs-adapter-moment";
 import { Line } from "react-chartjs-2";
 import { useSensors } from "../../hooks/useSensors";
+import { useMediaQuery } from "react-responsive";
 
 ChartJS.register(
     CategoryScale,
@@ -28,7 +29,7 @@ ChartJS.register(
     TimeSeriesScale
 );
 
-export const options = {
+const options = {
     maintainAspectRatio: false,
     responsive: true,
     interaction: {
@@ -46,7 +47,7 @@ export const options = {
         x: {
             title: {
                 display: true,
-                text: "Tiempo"
+                text: "Tiempo",
             },
             type: "time",
             gridLines: {
@@ -71,7 +72,7 @@ export const options = {
         y: {
             title: {
                 display: true,
-                text: "Humedad(%)"
+                text: "Humedad(%)",
             },
             type: "linear",
             display: true,
@@ -86,6 +87,60 @@ const HistoricSensorGraph = ({
     start = "",
     end = "",
 }) => {
+    const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
+
+    const options = {
+        maintainAspectRatio: false,
+        responsive: true,
+        interaction: {
+            mode: "index",
+            intersect: false,
+        },
+        stacked: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "HISTORICO DE SENSORES",
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    display: !isSmall,
+                    text: "Tiempo",
+                },
+                type: "time",
+                gridLines: {
+                    lineWidth: 2,
+                },
+                time: {
+                    unit: "day",
+                    unitStepSize: 1000,
+                    displayFormats: {
+                        millisecond: "MMM DD",
+                        second: "MMM DD",
+                        minute: "MMM DD",
+                        hour: "MMM DD",
+                        day: "MMM DD",
+                        week: "MMM DD",
+                        month: "MMM DD",
+                        quarter: "MMM DD",
+                        year: "MMM DD",
+                    },
+                },
+            },
+            y: {
+                title: {
+                    display: !isSmall,
+                    text: "Humedad(%)",
+                },
+                type: "linear",
+                display: true,
+                position: "left",
+            },
+        },
+    };
+
     const [selectedModel, setselectedModel] = useState(true);
     const [loadedData, setloadedData] = useState(true);
     const [loadingData, setLoadingData] = useState(false);
@@ -190,7 +245,7 @@ const HistoricSensorGraph = ({
     return (
         <section>
             {/*<Card title={title} filters={filter} filtersClear={clearFilter}>*/}
-            <Card style={{ minHeight: "350px" }}>
+            <Card style={isSmall ? { minHeight: "250px" } :{ minHeight: "350px" }}>
                 {!selectedModel ? (
                     <div>No se ha seleccionado un modelo.</div>
                 ) : loadingData ? (
