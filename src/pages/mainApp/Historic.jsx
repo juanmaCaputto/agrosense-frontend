@@ -1,52 +1,59 @@
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import { useState } from "react";
-import PieChart from "../../components/PieChart";
+import HistoricSensorGraph from "../../components/historic/HistoricSensorGraph";
 import InfoCard from "../../components/shared/InfoCard";
-import { Dataset } from "../../util/Data";
+import SelectDate from "../../components/shared/SelectDate";
+import { SelectOpcion } from "../../components/shared/SelectOpcion";
+
+const sensorValues = [
+    { label: "Temperatura Ambiente", value: "SENS_TEMP_AMBIENTE" },
+    { label: "Humedad Ambiente", value: "SENS_HUM_AMBIENTE" },
+    { label: "Humedad Suelo Alto", value: "SENS_HUM_SUELO_H" },
+    { label: "Humedad Suelo Medio", value: "SENS_HUM_SUELO_M" },
+    { label: "Humedad Suelo Bajo", value: "SENS_HUM_SUELO_L" },
+];
 
 export default function Historic() {
-    const [chartData, setChartData] = useState({
-        labels: Dataset.map((data) => data.year), 
-        datasets: [
-          {
-            label: "Users Gained ",
-            data: Dataset.map((data) => data.userGain),
-            backgroundColor: [
-              "rgba(75,192,192,1)",
-              "#ecf0f1",
-              "#50AF95",
-              "#f3ba2f",
-              "#2a71d0"
-            ],
-            borderColor: "black",
-            borderWidth: 2
-          }
-        ]
-      });
+    const [parameter, setParameter] = useState("");
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
 
     return (
-        <>
-            <Grid container sx={{ marginTop: "100px" }}>
-                <Grid item xs={12} sx={{ mb: 2 }}>
-                    <InfoCard minWidth="100%">
-                        <Grid
-                            item
-                            xs={4}
-                            sx={{ textAlign: "center", padding: "20px" }}
-                        >
-                            <PieChart chartData={chartData} />
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            sx={{ textAlign: "center", padding: "40px" }}
-                        >
-                            <Typography variant="h3">Frescura</Typography>
-                        </Grid>
-                    </InfoCard>
-                </Grid>
+        <InfoCard minWidth="100%" title="Histórico de Sensores">
+            <Grid item xs={12} md={4}>
+                <SelectOpcion
+                    opciones={sensorValues}
+                    title={"Parámetro"}
+                    value={parameter}
+                    setEstado={setParameter}
+                />
+                <SelectDate
+                    date={dateStart}
+                    setDate={setDateStart}
+                    title={"Start Date"}
+                />
+                <SelectDate
+                    date={dateEnd}
+                    setDate={setDateEnd}
+                    title={"End Date"}
+                />
             </Grid>
-        </>
+            <Grid
+                item
+                xs={12}
+                md={8}
+                sx={{
+                    textAlign: "center",
+                    padding: "20px",
+                }}
+            >
+                <HistoricSensorGraph
+                    title="HISTORICO DE SENSORES"
+                    variantId={parameter}
+                    start={dateStart}
+                    end={dateEnd}
+                />
+            </Grid>
+        </InfoCard>
     );
 }
-

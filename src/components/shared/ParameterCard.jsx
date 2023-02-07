@@ -1,25 +1,62 @@
-import { Grid, Typography } from "@mui/material";
-import InfoCard from "./InfoCard";
+import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 
 export default function ParameterCard({ title = "", value = "" }) {
     return (
-        <Grid item xs={12} sx={{ mb: 2 }}>
-            <InfoCard>
-                <Grid
-                    item
-                    xs={12}
-                    sx={{ textAlign: "center", padding: "20px" }}
+        <Grid item xs={6}>
+            <Paper
+                elevation={1}
+                sx={{ width: "94%", margin: "3%", borderRadius: "15px" }}
+            >
+                <Box
+                    style={{
+                        backgroundColor: "#D8ECFF",
+                        borderRadius: "15px",
+                        paddingTop: "15px",
+                        paddingLeft: "40px",
+                        paddingRight: "40px",
+                        paddingBottom: "10px",
+                    }}
                 >
-                    <Typography variant="h4">{title}</Typography>
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    sx={{ textAlign: "center", padding: "5%", height: "200px" }}
-                >
-                    <Typography variant="h1">{value}</Typography>
-                </Grid>
-            </InfoCard>
+                    <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
+                        {title !== "" && (
+                            <>
+                                <Grid item xs={12}>
+                                    <Typography
+                                        variant="h6"
+                                        style={{
+                                            textAlign: "center",
+                                            color: "#1665B3",
+                                            fontWeight: "600",
+                                        }}
+                                        gutterBottom
+                                    >
+                                        {title}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider />
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    sx={{
+                                        textAlign: "center",
+                                        padding: "5%",
+                                        height: "150px",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h1"
+                                        style={{ color: "#002F5D" }}
+                                    >
+                                        {value}
+                                    </Typography>
+                                </Grid>
+                            </>
+                        )}
+                    </Grid>
+                </Box>
+            </Paper>
         </Grid>
     );
 }

@@ -6,6 +6,8 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import InfoIcon from '@mui/icons-material/Info';
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -80,39 +82,51 @@ export default function SideMenu({ setOpen, open }) {
             </DrawerHeader>
             <Divider />
             <List>
-                {["Real Time", "History"].map((text, index) => (
-                    <ListItem
-                        key={text}
-                        onClick={() => setOpen(false)}
-                        to={index === 0 ? routes.REALTIME : routes.HISTORIC}
-                        disablePadding
-                        sx={{ display: "block", color: "black" }}
-                        component={NavLink}
-                    >
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? "initial" : "center",
-                                px: 2.5,
-                            }}
+                {["Tiempo Real", "Histórico", "Alarmas", "Información"].map(
+                    (text, index) => (
+                        <ListItem
+                            key={text}
+                            onClick={() => setOpen(false)}
+                            to={
+                                index === 0
+                                    ? routes.REALTIME
+                                    : index === 1
+                                    ? routes.HISTORIC
+                                    : index === 2
+                                    ? routes.ALARMS
+                                    : routes.INFO
+                            }
+                            disablePadding
+                            sx={{ display: "block", color: "black" }}
+                            component={NavLink}
                         >
-                            <ListItemIcon
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : "auto",
-                                    justifyContent: "center",
+                                    minHeight: 48,
+                                    justifyContent: open ? "initial" : "center",
+                                    px: 2.5,
                                 }}
                             >
-                                {index === 0 && <PlayCircleOutlineIcon />}
-                                {index === 1 && <EqualizerIcon />}
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={text}
-                                sx={{ opacity: open ? 1 : 0 }}
-                            />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : "auto",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    {index === 0 && <PlayCircleOutlineIcon />}
+                                    {index === 1 && <EqualizerIcon />}
+                                    {index === 2 && <AccessAlarmIcon />}
+                                    {index === 3 && <InfoIcon />}
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={text}
+                                    sx={{ opacity: open ? 1 : 0 }}
+                                />
+                            </ListItemButton>
+                        </ListItem>
+                    )
+                )}
             </List>
         </Drawer>
     );

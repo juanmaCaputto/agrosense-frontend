@@ -5,6 +5,8 @@ import { Header } from "../components/Header";
 import RealTime from "./mainApp/RealTime";
 import Historic from "./mainApp/Historic";
 import RedirectPage from "./loaders/RedirectPage";
+import Alarms from "./mainApp/Alarms";
+import Info from "./mainApp/Info";
 
 export default function MainApp() {
     return (
@@ -14,6 +16,8 @@ export default function MainApp() {
                     <Routes>
                         <Route path="/realtime" element={<RealTime />} />
                         <Route path="/historic" element={<Historic />} />
+                        <Route path="/alarms" element={<Alarms />} />
+                        <Route path="/info" element={<Info />} />
                         <Route path={"/*"} element={<RedirectPage />} />
                     </Routes>
                 </Container>
