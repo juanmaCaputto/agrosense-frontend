@@ -1,4 +1,4 @@
-import { CssBaseline, IconButton, Typography } from "@mui/material";
+import { CssBaseline, Grid, IconButton, Typography } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -55,13 +55,32 @@ export function Header() {
                         sx={{
                             marginRight: 5,
                             ...(open && { display: "none" }),
+                            color: "#F7FBFF",
                         }}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Agrosense
-                    </Typography>
+                    <Grid container>
+                        <Grid item xs={2}>
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
+                                style={{
+                                    color: "#F7FBFF",
+                                }}
+                            >
+                                <img
+                                    src={
+                                        process.env.PUBLIC_URL +
+                                        "/logo-full-agrosense.png"
+                                    }
+                                    style={{ paddingTop: "15px", width: "60%" }}
+                                    alt="Logo"
+                                />
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
             <SideMenu setOpen={setOpenSorpresa} open={open} />

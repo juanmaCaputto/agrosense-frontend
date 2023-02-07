@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -70,7 +70,10 @@ export default function SideMenu({ setOpen, open }) {
     const theme = useTheme();
 
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer
+            variant="permanent"
+            open={open}
+        >
             <DrawerHeader>
                 <IconButton onClick={() => setOpen(!open)}>
                     {theme.direction === "rtl" ? (
