@@ -16,6 +16,7 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { routes } from "../config/Routes";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const drawerWidth = 240;
 
@@ -67,13 +68,11 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideMenu({ setOpen, open }) {
+    const isSmall = useMediaQuery({ query: "(max-width: 576px)" });
     const theme = useTheme();
 
     return (
-        <Drawer
-            variant="permanent"
-            open={open}
-        >
+        <Drawer variant={isSmall ? "persistent" : "permanent"} open={open}>
             <DrawerHeader>
                 <IconButton onClick={() => setOpen(!open)}>
                     {theme.direction === "rtl" ? (

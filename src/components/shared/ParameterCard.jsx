@@ -2,7 +2,7 @@ import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 
 export default function ParameterCard({ title = "", value = "" }) {
     return (
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
             <Paper
                 elevation={1}
                 sx={{ width: "94%", margin: "3%", borderRadius: "15px" }}

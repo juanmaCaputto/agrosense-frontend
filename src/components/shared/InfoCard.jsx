@@ -23,6 +23,7 @@ export default function InfoCard({
 
     if (isSmall) {
         styleSxPaper = {};
+        marginTop = 0;
     }
 
     return (
