@@ -61,7 +61,7 @@ export function Header() {
                         <MenuIcon />
                     </IconButton>
                     <Grid container>
-                        <Grid item xs={2}>
+                        <Grid item xs={6} md={2}>
                             <Typography
                                 variant="h6"
                                 noWrap
