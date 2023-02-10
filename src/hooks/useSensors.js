@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { currentSensorData } from "../services/sensors/SensorsData";
+import { HistoricSensorData, sensorId } from "../services/sensors/SensorsData";
 
 export function useSensors() {
     const [humedadAmbiente, setHumedadAmbiente] = useState([]);
@@ -11,8 +11,13 @@ export function useSensors() {
     const [temperatura, setTemperatura] = useState([]);
 
     const setCurrentValues = async () => {
-        const allData = await currentSensorData();
-        allData.forEach((e) => {
+        //const sensors = await sensorId();
+        /*const allData = await currentSensorData({
+            start: "2023-01-01%2012:00:00",
+            end: "2023-02-02%2000:00:00",
+            sensorId: "SENS_HUM_SUELO_01_M",
+        });*/
+        /*allData.forEach((e) => {
             if (e.sensorId.search("HUM_AMBIENTE") !== -1) {
                 setHumedadAmbiente([...humedadAmbiente, e.value]);
             } else if (e.sensorId.search("HUM_SUELO_H") !== -1) {
@@ -28,16 +33,24 @@ export function useSensors() {
             } else if (e.sensorId.search("TEMP_AMBIENTE") !== -1) {
                 setTemperatura([...temperatura, e.value]);
             }
-        });
+        });*/
     };
 
     const getValuesParameter = async ({
-        sensorId = "",
+        sensorsId = [],
         start = "",
         end = "",
     }) => {
-        const allData = await currentSensorData({ start, end, sensorId });
-        return allData;
+        console.log(sensorsId);
+        const sensorData = await Promise.all(
+            sensorsId.map((sensorId) =>
+                HistoricSensorData({ start, end, sensorId }).then((res) => {
+                    return { id: sensorId, data: res.data };
+                })
+            )
+        );
+        console.log(sensorData);
+        return [...sensorData];
     };
 
     return { setCurrentValues, getValuesParameter, humedadSueloH };

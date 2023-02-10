@@ -16,6 +16,7 @@ import "chartjs-adapter-moment";
 import { Line } from "react-chartjs-2";
 import { useSensors } from "../../hooks/useSensors";
 import { useMediaQuery } from "react-responsive";
+import { formatDatePicker } from "../../util/FormatDatePicker";
 
 ChartJS.register(
     CategoryScale,
@@ -29,63 +30,52 @@ ChartJS.register(
     TimeSeriesScale
 );
 
-const options = {
-    maintainAspectRatio: false,
-    responsive: true,
-    interaction: {
-        mode: "index",
-        intersect: false,
+const colors = [
+    {
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
-    stacked: false,
-    plugins: {
-        title: {
-            display: true,
-            text: "HISTORICO DE SENSORES",
-        },
+    {
+        borderColor: "rgb(170, 70, 132)",
+        backgroundColor: "rgba(170, 70, 132, 0.5)",
     },
-    scales: {
-        x: {
-            title: {
-                display: true,
-                text: "Tiempo",
-            },
-            type: "time",
-            gridLines: {
-                lineWidth: 2,
-            },
-            time: {
-                unit: "day",
-                unitStepSize: 1000,
-                displayFormats: {
-                    millisecond: "MMM DD",
-                    second: "MMM DD",
-                    minute: "MMM DD",
-                    hour: "MMM DD",
-                    day: "MMM DD",
-                    week: "MMM DD",
-                    month: "MMM DD",
-                    quarter: "MMM DD",
-                    year: "MMM DD",
-                },
-            },
-        },
-        y: {
-            title: {
-                display: true,
-                text: "Humedad(%)",
-            },
-            type: "linear",
-            display: true,
-            position: "left",
-        },
+    {
+        borderColor: "rgb(255, 20, 20)",
+        backgroundColor: "rgba(255, 20, 20, 0.5)",
     },
-};
+    {
+        borderColor: "rgb(120, 99, 132)",
+        backgroundColor: "rgba(120, 99, 132, 0.5)",
+    },
+    {
+        borderColor: "rgb(120, 200, 132)",
+        backgroundColor: "rgba(120, 200, 132, 0.5)",
+    },
+    {
+        borderColor: "rgb(255, 99, 20)",
+        backgroundColor: "rgba(255, 99, 20, 0.5)",
+    },
+    {
+        borderColor: "rgb(20, 120, 132)",
+        backgroundColor: "rgba(20, 120, 132, 0.5)",
+    },
+    {
+        borderColor: "rgb(40, 150, 80)",
+        backgroundColor: "rgba(40, 150, 80, 0.5)",
+    },
+    {
+        borderColor: "rgb(80, 99, 190)",
+        backgroundColor: "rgba(80, 99, 190, 0.5)",
+    },
+];
 
 const HistoricSensorGraph = ({
     title = "HISTORICO DE SENSORES",
-    variantId = "",
+    variantsId = [],
     start = "",
     end = "",
+    sensorDataset = [],
+    scale = "day",
 }) => {
     const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
 
@@ -114,13 +104,13 @@ const HistoricSensorGraph = ({
                     lineWidth: 2,
                 },
                 time: {
-                    unit: "day",
-                    unitStepSize: 1000,
+                    unit: scale,
+                    unitStepSize: 10000,
                     displayFormats: {
                         millisecond: "MMM DD",
                         second: "MMM DD",
                         minute: "MMM DD",
-                        hour: "MMM DD",
+                        hour: "HH:mm",
                         day: "MMM DD",
                         week: "MMM DD",
                         month: "MMM DD",
@@ -130,10 +120,10 @@ const HistoricSensorGraph = ({
                 },
             },
             y: {
-                title: {
+                /*title: {
                     display: !isSmall,
                     text: "Humedad(%)",
-                },
+                },*/
                 type: "linear",
                 display: true,
                 position: "left",
@@ -141,7 +131,7 @@ const HistoricSensorGraph = ({
         },
     };
 
-    const [selectedModel, setselectedModel] = useState(true);
+    /*const [selectedModel, setselectedModel] = useState(true);
     const [loadedData, setloadedData] = useState(true);
     const [loadingData, setLoadingData] = useState(false);
     const startLoading = () => {
@@ -150,72 +140,48 @@ const HistoricSensorGraph = ({
     };
     const stopLoading = () => setLoadingData(false);
     const hasLoadedData = () => setloadedData(true);
-    const noLoadedData = () => setloadedData(false);
-    const [id, setId] = useState(variantId);
-
-    useEffect(() => {
-        if (variantId) {
-            if (variantId.length !== 0) {
-                setId(variantId);
-            }
-        }
-    }, [variantId]);
+    const noLoadedData = () => setloadedData(false);*/
 
     const { getValuesParameter } = useSensors();
 
-    /*const sensorDataset = getValuesParameter({
-        sensorId: id,
-        start,
-        end,
-    });*/
+    /*let sensorDataset = [];
+    if (variantsId.length > 0 && start !== "" && end !== "") {
+        sensorDataset = getValuesParameter({
+            sensorsId: variantsId,
+            start: formatDatePicker(start),
+            end: formatDatePicker(end),
+        });
+    }*/
 
-    const sensorDataset = [
-        { timeStamp: "2023-01-06 00:39", value: "70" },
-        { timeStamp: "2023-02-07 07:39", value: "98" },
-        { timeStamp: "2023-02-08 08:39", value: "67" },
-        { timeStamp: "2023-02-09 09:39", value: "96" },
-        { timeStamp: "2023-02-16 10:39", value: "67" },
-        { timeStamp: "2023-02-17 11:39", value: "56" },
-        { timeStamp: "2023-02-18 12:39", value: "58" },
-        { timeStamp: "2023-02-19 13:39", value: "75" },
-        { timeStamp: "2023-02-20 14:39", value: "86" },
-    ];
-
-    /*const devVarPriceEvol = useGetDeviceVariantPrices(
-        id,
-        start || new Date(),
-        end || new Date(),
-        startLoading,
-        stopLoading,
-        hasLoadedData,
-        noLoadedData
-    );*/
     let labels = [];
-    Object.values(sensorDataset).forEach(function (value) {
-        labels.push(value["timeStamp"].split(" ")[0]);
+    sensorDataset.forEach(function (dataset) {
+        dataset.data.forEach(function (value) {
+            labels.push(value["timestamp"].split(" ")[0]);
+        });
     });
-
-    let dataset = {
-        label: id,
-        data: Object.values(sensorDataset)
-            .map((value) => {
-                return {
-                    x: new Date(value["timeStamp"]),
-                    y: value["value"],
-                };
-            })
-            .sort((a, b) => {
-                if (a && b) {
-                    return a.x.getTime() - b.x.getTime();
-                } else {
-                    return 0;
-                }
-            }),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        yAxisID: "y",
-        pointRadius: 0,
-    };
+    let datasets = sensorDataset.map((value, i) => {
+        return {
+            label: value["id"],
+            data: value["data"]
+                .map(function (vvalue) {
+                    return {
+                        x: new Date(vvalue["timestamp"]),
+                        y: vvalue["value"],
+                    };
+                })
+                .sort((a, b) => {
+                    if (a && b) {
+                        return a.x.getTime() - b.x.getTime();
+                    } else {
+                        return 0;
+                    }
+                }),
+            borderColor: colors[i].borderColor,
+            backgroundColor: colors[i].backgroundColor,
+            yAxisID: "y",
+            pointRadius: 0,
+        };
+    });
     /*labels = labels.sort((a, b) => {
         if (a && b) {
             return a.getTime() - b.getTime();
@@ -226,7 +192,7 @@ const HistoricSensorGraph = ({
 
     const data = {
         labels: labels,
-        datasets: [dataset],
+        datasets: datasets,
     };
     /*let filter = !selectedModel
         ? null
@@ -245,8 +211,12 @@ const HistoricSensorGraph = ({
     return (
         <section>
             {/*<Card title={title} filters={filter} filtersClear={clearFilter}>*/}
-            <Card style={isSmall ? { minHeight: "250px" } :{ minHeight: "350px" }}>
-                {!selectedModel ? (
+            <Card
+                style={
+                    isSmall ? { minHeight: "250px" } : { minHeight: "350px" }
+                }
+            >
+                {/*{!selectedModel ? (
                     <div>No se ha seleccionado un modelo.</div>
                 ) : loadingData ? (
                     <div>Cargando datos...</div>
@@ -256,7 +226,8 @@ const HistoricSensorGraph = ({
                     <div>
                         No hay datos para mostrar del modelo seleccionado.
                     </div>
-                )}
+                )}*/}
+                <Line options={options} data={data} />
             </Card>
         </section>
     );

@@ -9,7 +9,7 @@ export async function request({
     console.log(params);
 
     let headers = {
-        "Content-Type": "application/JSON",
+        "Content-Type": "application/JSON"
     };
 
     try {
