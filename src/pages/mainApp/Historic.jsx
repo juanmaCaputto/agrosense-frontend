@@ -24,6 +24,11 @@ const sensorValues = [
     { label: "Humedad Suelo Alto 1", value: "SENS_HUM_SUELO_01_H" },
     { label: "Humedad Suelo Medio 1", value: "SENS_HUM_SUELO_01_M" },
     { label: "Humedad Suelo Bajo 1", value: "SENS_HUM_SUELO_01_L" },
+    { label: "Temperatura Ambiente 2", value: "SENS_TEMP_AMBIENTE_02" },
+    { label: "Humedad Ambiente 2", value: "SENS_HUM_AMBIENTE_02" },
+    { label: "Humedad Suelo Alto 2", value: "SENS_HUM_SUELO_02_H" },
+    { label: "Humedad Suelo Medio 2", value: "SENS_HUM_SUELO_02_M" },
+    { label: "Humedad Suelo Bajo 2", value: "SENS_HUM_SUELO_02_L" },
 ];
 
 export default function Historic() {
