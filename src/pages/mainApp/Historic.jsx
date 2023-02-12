@@ -4,6 +4,7 @@ import {
     FormControl,
     Grid,
     InputLabel,
+    ListSubheader,
     MenuItem,
     OutlinedInput,
     Select,
@@ -19,11 +20,13 @@ import { useSensors } from "../../hooks/useSensors";
 import { formatDatePicker } from "../../util/FormatDatePicker";
 
 const sensorValues = [
+    { label: "DISP_TEST01", value: "" },
     { label: "Temperatura Ambiente 1", value: "SENS_TEMP_AMBIENTE_01" },
     { label: "Humedad Ambiente 1", value: "SENS_HUM_AMBIENTE_01" },
     { label: "Humedad Suelo Alto 1", value: "SENS_HUM_SUELO_01_H" },
     { label: "Humedad Suelo Medio 1", value: "SENS_HUM_SUELO_01_M" },
     { label: "Humedad Suelo Bajo 1", value: "SENS_HUM_SUELO_01_L" },
+    { label: "DISP_TEST02", value: "" },
     { label: "Temperatura Ambiente 2", value: "SENS_TEMP_AMBIENTE_02" },
     { label: "Humedad Ambiente 2", value: "SENS_HUM_AMBIENTE_02" },
     { label: "Humedad Suelo Alto 2", value: "SENS_HUM_SUELO_02_H" },
@@ -85,14 +88,13 @@ export default function Historic() {
     };
 
     return (
-        <InfoCard minWidth="100%" title="Histórico de Sensores">
+        <InfoCard minWidth="100%" width="100%" title="Histórico de Sensores">
             <Grid item xs={12} sm={4}>
                 <FormControl
-                    fullWidth
                     variant="outlined"
                     style={{
-                        backgroundColor: "white",
                         textAlign: "left",
+                        width: "100%",
                     }}
                     sx={{ mt: 2 }}
                     size="small"
@@ -103,15 +105,33 @@ export default function Historic() {
                         label="Estado"
                         multiple
                         input={<OutlinedInput label="Estado" />}
-                        renderValue={(selected) => selected.join(", ")}
+                        renderValue={(selected) =>
+                            selected.map((e) => e.label).join(", ")
+                        }
                         onChange={handleChangeParameters}
                         value={parameters}
                     >
-                        {sensorValues.map((i, index) => (
-                            <MenuItem value={i.value} key={index}>
-                                {i.label}
-                            </MenuItem>
-                        ))}
+                        {sensorValues.map((i, index) => {
+                            if (i.value !== "") {
+                                return (
+                                    <MenuItem
+                                        value={{
+                                            value: i.value,
+                                            label: i.label,
+                                        }}
+                                        key={index}
+                                    >
+                                        {i.label}
+                                    </MenuItem>
+                                );
+                            } else {
+                                return (
+                                    <ListSubheader key={index}>
+                                        {i.label}
+                                    </ListSubheader>
+                                );
+                            }
+                        })}
                     </Select>
                 </FormControl>
                 <SelectDate
