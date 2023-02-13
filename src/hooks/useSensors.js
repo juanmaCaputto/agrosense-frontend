@@ -42,14 +42,11 @@ export function useSensors() {
         end = "",
     }) => {
         const sensorData = await Promise.all(
-            sensorsId.map((sensorId) => {
-                const valueSensorId = sensorId.value;
-                return HistoricSensorData({ start, end, valueSensorId }).then(
-                    (res) => {
-                        return { id: sensorId, data: res.data };
-                    }
-                );
+            sensorsId.map((sensorId) =>
+            HistoricSensorData({ start, end, sensorId }).then((res) => {
+                return { id: sensorId, data: res.data };
             })
+        )
         );
         console.log(sensorData);
         return [...sensorData];

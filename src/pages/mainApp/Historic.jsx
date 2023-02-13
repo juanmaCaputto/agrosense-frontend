@@ -105,22 +105,14 @@ export default function Historic() {
                         label="Estado"
                         multiple
                         input={<OutlinedInput label="Estado" />}
-                        renderValue={(selected) =>
-                            selected.map((e) => e.label).join(", ")
-                        }
+                        renderValue={(selected) => selected.join(", ")}
                         onChange={handleChangeParameters}
                         value={parameters}
                     >
                         {sensorValues.map((i, index) => {
                             if (i.value !== "") {
                                 return (
-                                    <MenuItem
-                                        value={{
-                                            value: i.value,
-                                            label: i.label,
-                                        }}
-                                        key={index}
-                                    >
+                                    <MenuItem value={i.value} key={index}>
                                         {i.label}
                                     </MenuItem>
                                 );
