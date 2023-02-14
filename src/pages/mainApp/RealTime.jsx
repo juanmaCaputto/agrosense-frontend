@@ -13,15 +13,10 @@ import SubParameterCard from "../../components/shared/SubParameterCard";
 import BackCard from "../../components/shared/BackCard";
 
 export default function RealTime() {
-    const { setCurrentValues, humedadSueloH } = useSensors();
     const [fechaActualizacion, setFechaActualizacion] = useState(
         getCurrentDate()
     );
     const ctx = useContext(SensorsContext);
-
-    useEffect(() => {
-        setCurrentValues();
-    });
 
     const weatherIcon = () => {
         if (ctx.currentAvgValues.luz && !ctx.currentAvgValues.lluvia) {

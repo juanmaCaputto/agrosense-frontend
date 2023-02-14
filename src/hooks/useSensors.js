@@ -1,39 +1,41 @@
-import { useState } from "react";
-import { HistoricSensorData, sensorId } from "../services/sensors/SensorsData";
+import { useContext } from "react";
+import InfoContext from "../context/InfoContext";
+import {
+    getHistoricSensorData,
+    getSensorsId,
+} from "../services/sensors/SensorsData";
 
 export function useSensors() {
-    const [humedadAmbiente, setHumedadAmbiente] = useState([]);
-    const [humedadSueloH, setHumedadSueloH] = useState([]);
-    const [humedadSueloM, setHumedadSueloM] = useState([]);
-    const [humedadSueloL, setHumedadSueloL] = useState([]);
-    const [lluvia, setLluvia] = useState([]);
-    const [luz, setLuz] = useState([]);
-    const [temperatura, setTemperatura] = useState([]);
+    const ctx = useContext(InfoContext);
 
-    const setCurrentValues = async () => {
-        //const sensors = await sensorId();
-        /*const allData = await currentSensorData({
-            start: "2023-01-01%2012:00:00",
-            end: "2023-02-02%2000:00:00",
-            sensorId: "SENS_HUM_SUELO_01_M",
-        });*/
-        /*allData.forEach((e) => {
-            if (e.sensorId.search("HUM_AMBIENTE") !== -1) {
-                setHumedadAmbiente([...humedadAmbiente, e.value]);
-            } else if (e.sensorId.search("HUM_SUELO_H") !== -1) {
-                setHumedadSueloH([...humedadSueloH, e.value]);
-            } else if (e.sensorId.search("HUM_SUELO_M") !== -1) {
-                setHumedadSueloM([...humedadSueloM, e.value]);
-            } else if (e.sensorId.search("HUM_SUELO_L") !== -1) {
-                setHumedadSueloL([...humedadSueloL, e.value]);
-            } else if (e.sensorId.search("LLUVIA") !== -1) {
-                setLluvia([...lluvia, e.value]);
-            } else if (e.sensorId.search("LUZ") !== -1) {
-                setLuz([...luz, e.value]);
-            } else if (e.sensorId.search("TEMP_AMBIENTE") !== -1) {
-                setTemperatura([...temperatura, e.value]);
+    const getSensorNames = async () => {
+        const sensorsId = await getSensorsId();
+        let devices = [];
+        sensorsId.forEach((e, i) => {
+            if (i === 0) {
+                devices.push({
+                    device: sensorsId[i].idDispositivo,
+                    sensors: [sensorsId[i].idSensor],
+                });
+            } else {
+                let deviceExist = false;
+                devices.forEach((e) => {
+                    if (e.device === sensorsId[i].idDispositivo) {
+                        e.sensors.push(sensorsId[i].idSensor);
+                        deviceExist = true;
+                    }
+                });
+                if (!deviceExist) {
+                    devices.push({
+                        device: sensorsId[i].idDispositivo,
+                        sensors: [sensorsId[i].idSensor],
+                    });
+                }
             }
-        });*/
+        });
+        console.log(devices)
+        ctx.setLoading(false);
+        ctx.setDevices([...devices]);
     };
 
     const getValuesParameter = async ({
@@ -43,14 +45,14 @@ export function useSensors() {
     }) => {
         const sensorData = await Promise.all(
             sensorsId.map((sensorId) =>
-            HistoricSensorData({ start, end, sensorId }).then((res) => {
-                return { id: sensorId, data: res.data };
-            })
-        )
+                getHistoricSensorData({ start, end, sensorId }).then((res) => {
+                    return { id: sensorId, data: res.data };
+                })
+            )
         );
         console.log(sensorData);
         return [...sensorData];
     };
 
-    return { setCurrentValues, getValuesParameter, humedadSueloH };
+    return { getSensorNames, getValuesParameter };
 }

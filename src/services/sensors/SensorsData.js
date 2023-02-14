@@ -1,6 +1,6 @@
 import { request } from "../GeneralApi";
 
-export function HistoricSensorData({
+export function getHistoricSensorData({
     start = "2022-01-01%2012:00:00",
     end = "2025-01-01%2000:00:00",
     sensorId = "",
@@ -11,7 +11,7 @@ export function HistoricSensorData({
     });
 }
 
-export function sensorId() {
+export function getSensorsId() {
     return request({
         params: `/getSensores`,
         method: "GET",
