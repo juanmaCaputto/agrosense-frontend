@@ -1,55 +1,15 @@
 import SubParameterCard from "./SubParameterCard";
 
-export default function BackCard() {
+export default function BackCard({ info1, info2 }) {
     return (
         <>
             <SubParameterCard
                 deviceName="DISPOSITIVO 1"
-                info={
-                    <>
-                        H: 70%
-                        <br />
-                        M: 68%
-                        <br />
-                        L: 65%
-                    </>
-                }
+                info={info1}
             />
             <SubParameterCard
                 deviceName="DISPOSITIVO 2"
-                info={
-                    <>
-                        H: 70%
-                        <br />
-                        M: 68%
-                        <br />
-                        L: 65%
-                    </>
-                }
-            />
-            <SubParameterCard
-                deviceName="DISPOSITIVO 3"
-                info={
-                    <>
-                        H: 70%
-                        <br />
-                        M: 68%
-                        <br />
-                        L: 65%
-                    </>
-                }
-            />
-            <SubParameterCard
-                deviceName="DISPOSITIVO 4"
-                info={
-                    <>
-                        H: 70%
-                        <br />
-                        M: 68%
-                        <br />
-                        L: 65%
-                    </>
-                }
+                info={info2}
             />
         </>
     );

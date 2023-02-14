@@ -1,33 +1,48 @@
 import { useState, useEffect, useContext } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import ParameterCard from "../../components/shared/ParameterCard";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import CloudIcon from "@mui/icons-material/Cloud";
-import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import {
+    WiDaySunny,
+    WiDayRain,
+    WiCloud,
+    WiRain,
+    WiNightClear,
+    WiNightAltRain,
+} from "weather-icons-react";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useSensors } from "../../hooks/useSensors";
-import SensorsContext from "../../context/sensorsContext";
+import SensorsContext from "../../context/SensorsContext";
 import InfoCard from "../../components/shared/InfoCard";
 import { getCurrentDate } from "../../util/GetCurrentDate";
 import SubParameterCard from "../../components/shared/SubParameterCard";
 import BackCard from "../../components/shared/BackCard";
+import RealtimeContext from "../../context/RealtimeContext";
+import ParameterCardDouble from "../../components/shared/ParameterCardDouble";
+import ParameterCardSingle from "../../components/shared/ParameterCardSingle";
+import { useWeather } from "../../hooks/useWeather";
 
 export default function RealTime() {
     const [fechaActualizacion, setFechaActualizacion] = useState(
         getCurrentDate()
     );
-    const ctx = useContext(SensorsContext);
+    const { getValuesRealTime } = useSensors();
+    const { weatherIcon } = useWeather();
+    const ctx = useContext(RealtimeContext);
 
-    const weatherIcon = () => {
-        if (ctx.currentAvgValues.luz && !ctx.currentAvgValues.lluvia) {
-            return <WbSunnyIcon sx={{ width: "40%", height: "50%" }} />;
-        } else if (!ctx.currentAvgValues.luz && !ctx.currentAvgValues.lluvia) {
-            return <CloudIcon sx={{ width: "40%", height: "50%" }} />;
-        } else if (!ctx.currentAvgValues.luz && ctx.currentAvgValues.lluvia) {
-            return <ThunderstormIcon sx={{ width: "40%", height: "50%" }} />;
-        } else {
-            return <WbSunnyIcon sx={{ width: "40%", height: "50%" }} />;
+    const handleGetValuesRealtime = async () => {
+        if (!ctx.alreadyChecked) {
+            await getValuesRealTime();
         }
+        ctx.setAlreadyChecked(true);
+    };
+
+    useEffect(() => {
+        handleGetValuesRealtime();
+    });
+
+    const refreshPage = async () => {
+        await getValuesRealTime();
+        setFechaActualizacion(getCurrentDate());
     };
 
     return (
@@ -37,26 +52,76 @@ export default function RealTime() {
             title="Información en Tiempo Real"
         >
             <Grid container>
-                <ParameterCard
+                <ParameterCardSingle title="Clima" value={weatherIcon()} />
+                <ParameterCardDouble
                     title="Humedad de suelo"
-                    value={`${ctx.currentAvgValues.humedadSueloTotal}%`}
+                    value1={`${ctx.promedios.humedadSueloTotal1}%`}
+                    value2={`${ctx.promedios.humedadSueloTotal2}%`}
                 >
-                    <BackCard />
-                </ParameterCard>
+                    <BackCard
+                        info1={
+                            <>
+                                <b>H:</b> {ctx.datos.dispositivo1.humedadSueloH}
+                                %
+                                <br />
+                                <b>M:</b> {ctx.datos.dispositivo1.humedadSueloM}
+                                %
+                                <br />
+                                <b>L:</b> {ctx.datos.dispositivo1.humedadSueloL}
+                                %
+                            </>
+                        }
+                        info2={
+                            <>
+                                <b>H:</b> {ctx.datos.dispositivo2.humedadSueloH}
+                                %
+                                <br />
+                                <b>M:</b> {ctx.datos.dispositivo2.humedadSueloM}
+                                %
+                                <br />
+                                <b>L:</b> {ctx.datos.dispositivo2.humedadSueloL}
+                                %
+                            </>
+                        }
+                    />
+                </ParameterCardDouble>
                 <ParameterCard
                     title="Humedad Ambiente"
-                    value={`${ctx.currentAvgValues.humedadAmbiente}%`}
+                    value={`${ctx.promedios.humedadAmbiente}%`}
                 >
-                    <BackCard />
-                </ParameterCard>
-                <ParameterCard title="Clima" value={weatherIcon()}>
-                    <BackCard />
+                    <BackCard
+                        info1={
+                            <>
+                                <b>Humedad:</b>{" "}
+                                {ctx.datos.dispositivo1.humedadAmbiente}%
+                            </>
+                        }
+                        info2={
+                            <>
+                                <b>Humedad:</b>{" "}
+                                {ctx.datos.dispositivo2.humedadAmbiente}%
+                            </>
+                        }
+                    />
                 </ParameterCard>
                 <ParameterCard
                     title="Temperatura"
-                    value={`${ctx.currentAvgValues.tempAmbiente}°C`}
+                    value={`${ctx.promedios.tempAmbiente}°C`}
                 >
-                    <BackCard />
+                    <BackCard
+                        info1={
+                            <>
+                                <b>Temperatura:</b>{" "}
+                                {ctx.datos.dispositivo1.tempAmbiente}°C
+                            </>
+                        }
+                        info2={
+                            <>
+                                <b>Temperatura:</b>{" "}
+                                {ctx.datos.dispositivo2.tempAmbiente}°C
+                            </>
+                        }
+                    />
                 </ParameterCard>
                 <Grid container item xs={12} sm={6} sx={{ pl: 2 }}>
                     <Typography variant="subtitle2">
@@ -75,6 +140,7 @@ export default function RealTime() {
                         size="small"
                         variant="contained"
                         startIcon={<CachedIcon />}
+                        onClick={refreshPage}
                     >
                         Actualizar
                     </Button>

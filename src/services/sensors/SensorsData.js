@@ -11,6 +11,13 @@ export function getHistoricSensorData({
     });
 }
 
+export function getLatestValues() {
+    return request({
+        params: `/GetDatosLatest`,
+        method: "GET",
+    });
+}
+
 export function getSensorsId() {
     return request({
         params: `/getSensores`,

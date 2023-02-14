@@ -5,7 +5,7 @@ export default function SubParameterCard({ deviceName = "", info = "" }) {
     const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
 
     return (
-        <Grid container item xs={6}>
+        <Grid container item xs={6} sx={{ pt: 8, pb: 8 }}>
             <Grid item xs={12}>
                 <Typography
                     variant={!isSmall ? "subtitle1" : "subtitle2"}

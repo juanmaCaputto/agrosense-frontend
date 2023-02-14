@@ -1,12 +1,21 @@
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import { useMediaQuery } from "react-responsive";
 
 export default function ParameterCard({ title = "", value = "", children }) {
+    const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     const [isFlipped, setIsFlipped] = useState(false);
 
     return (
-        <Grid item xs={12} md={6}>
+        <Grid
+            item
+            xs={12}
+            md={6}
+            style={{
+                cursor: "pointer"
+            }}
+        >
             <ReactCardFlip isFlipped={isFlipped}>
                 <Paper
                     key="front"
@@ -55,7 +64,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                                 }}
                             >
                                 <Typography
-                                    variant="h1"
+                                    variant={isSmall ? "h3" : "h1"}
                                     style={{ color: "#002F5D" }}
                                 >
                                     {value}
@@ -75,6 +84,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                             backgroundColor: "#D8ECFF",
                             borderRadius: "15px",
                             padding: "15px",
+                            minHeight: "245px",
                         }}
                     >
                         <Grid container direction="row">
