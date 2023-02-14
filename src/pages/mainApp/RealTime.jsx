@@ -1,20 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import ParameterCard from "../../components/shared/ParameterCard";
-import {
-    WiDaySunny,
-    WiDayRain,
-    WiCloud,
-    WiRain,
-    WiNightClear,
-    WiNightAltRain,
-} from "weather-icons-react";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useSensors } from "../../hooks/useSensors";
-import SensorsContext from "../../context/SensorsContext";
 import InfoCard from "../../components/shared/InfoCard";
 import { getCurrentDate } from "../../util/GetCurrentDate";
-import SubParameterCard from "../../components/shared/SubParameterCard";
 import BackCard from "../../components/shared/BackCard";
 import RealtimeContext from "../../context/RealtimeContext";
 import ParameterCardDouble from "../../components/shared/ParameterCardDouble";
