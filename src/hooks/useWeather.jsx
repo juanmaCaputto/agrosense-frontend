@@ -16,25 +16,49 @@ export function useWeather() {
         console.log(ctx.promedios.luz);
         console.log(ctx.promedios.lluvia);
         if (ctx.promedios.luz <= 20 && !ctx.promedios.lluvia) {
-            return <WiDaySunny style={{ width: "40%", height: "50%" }} />;
+            return (
+                <WiDaySunny
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         } else if (ctx.promedios.luz <= 20 && ctx.promedios.lluvia) {
-            return <WiDayRain sx={{ width: "40%", height: "50%" }} />;
+            return (
+                <WiDayRain
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         } else if (
             ctx.promedios.luz > 20 &&
             ctx.promedios.luz < 1000 &&
             !ctx.promedios.lluvia
         ) {
-            return <WiCloud sx={{ width: "40%", height: "50%" }} />;
+            return (
+                <WiCloud
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         } else if (
             ctx.promedios.luz > 20 &&
             ctx.promedios.luz < 1000 &&
             !ctx.promedios.lluvia
         ) {
-            return <WiRain sx={{ width: "40%", height: "50%" }} />;
+            return (
+                <WiRain
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         } else if (ctx.promedios.luz >= 1000 && !ctx.promedios.lluvia) {
-            return <BedtimeIcon sx={{ width: "40%", height: "50%" }} />;
+            return (
+                <BedtimeIcon
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         } else if (ctx.promedios.luz >= 1000 && ctx.promedios.lluvia) {
-            return <WiNightAltRain sx={{ width: "40%", height: "50%" }} />;
+            return (
+                <WiNightAltRain
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
         }
     };
 

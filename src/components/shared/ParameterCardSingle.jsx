@@ -23,7 +23,7 @@ export default function ParameterCardSingle({ title = "", value = "" }) {
                         minHeight: "260px"
                     }}
                 >
-                    <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
+                    <Grid container direction="row" sx={{ }}>
                         {title !== "" && (
                             <>
                                 <Grid item xs={12}>
@@ -49,8 +49,6 @@ export default function ParameterCardSingle({ title = "", value = "" }) {
                             xs={12}
                             sx={{
                                 textAlign: "center",
-                                padding: "5%",
-                                height: "150px",
                             }}
                         >
                             <Typography
