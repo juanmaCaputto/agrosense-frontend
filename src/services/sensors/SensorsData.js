@@ -18,6 +18,18 @@ export function getLatestValues() {
     });
 }
 
+export function setAlarm({
+    idSensor = "",
+    lowerValue = "",
+    upperValue = "",
+    enabled = "",
+}) {
+    return request({
+        params: `/AlarmasSaveState?idSensor=${idSensor}&lowerValue=${lowerValue}&upperValue=${upperValue}&enabled=${enabled}`,
+        method: "´POST",
+    });
+}
+
 export function getSensorsId() {
     return request({
         params: `/getSensores`,

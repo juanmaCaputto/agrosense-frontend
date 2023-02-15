@@ -30,7 +30,7 @@ export default function ParameterCardDouble({
                         width: "94%",
                         margin: "3%",
                         borderRadius: "15px",
-                        minHeight: "245px",
+                        minHeight: "260px"
                     }}
                 >
                     <Box
@@ -41,7 +41,7 @@ export default function ParameterCardDouble({
                             paddingLeft: "40px",
                             paddingRight: "40px",
                             paddingBottom: "10px",
-                            minHeight: "245px",
+                            minHeight: "260px",
                         }}
                     >
                         <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
@@ -145,7 +145,7 @@ export default function ParameterCardDouble({
                             backgroundColor: "#D8ECFF",
                             borderRadius: "15px",
                             padding: "15px",
-                            maxHeight: "245px",
+                            minHeight: "260px"
                         }}
                     >
                         <Grid container direction="row">

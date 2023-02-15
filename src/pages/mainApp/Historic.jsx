@@ -26,12 +26,14 @@ const sensorValues = [
     { label: "Humedad Suelo Alto 1", value: "SENS_HUM_SUELO_01_H" },
     { label: "Humedad Suelo Medio 1", value: "SENS_HUM_SUELO_01_M" },
     { label: "Humedad Suelo Bajo 1", value: "SENS_HUM_SUELO_01_L" },
+    { label: "Lluvia 1", value: "SENS_LLUVIA_01" },
     { label: "DISP_TEST02", value: "" },
     { label: "Temperatura Ambiente 2", value: "SENS_TEMP_AMBIENTE_02" },
     { label: "Humedad Ambiente 2", value: "SENS_HUM_AMBIENTE_02" },
     { label: "Humedad Suelo Alto 2", value: "SENS_HUM_SUELO_02_H" },
     { label: "Humedad Suelo Medio 2", value: "SENS_HUM_SUELO_02_M" },
     { label: "Humedad Suelo Bajo 2", value: "SENS_HUM_SUELO_02_L" },
+    { label: "Lluvia 2", value: "SENS_LLUVIA_02" },
 ];
 
 export default function Historic() {
@@ -113,6 +115,7 @@ export default function Historic() {
                             if (i.value !== "") {
                                 return (
                                     <MenuItem value={i.value} key={index}>
+                                    <Checkbox checked={parameters.indexOf(i.value) > -1} />
                                         {i.label}
                                     </MenuItem>
                                 );

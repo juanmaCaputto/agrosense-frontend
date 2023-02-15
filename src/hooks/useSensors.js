@@ -100,5 +100,9 @@ export function useSensors() {
         return [...sensorData];
     };
 
+    const getAlarms = async () => {
+        
+    };
+
     return { getSensorNames, getValuesRealTime, getValuesParameter };
 }

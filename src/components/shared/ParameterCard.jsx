@@ -31,6 +31,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                             paddingLeft: "40px",
                             paddingRight: "40px",
                             paddingBottom: "10px",
+                            minHeight: "260px"
                         }}
                     >
                         <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
@@ -84,7 +85,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                             backgroundColor: "#D8ECFF",
                             borderRadius: "15px",
                             padding: "15px",
-                            minHeight: "245px",
+                            minHeight: "260px"
                         }}
                     >
                         <Grid container direction="row">

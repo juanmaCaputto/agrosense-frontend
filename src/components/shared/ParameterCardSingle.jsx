@@ -20,6 +20,7 @@ export default function ParameterCardSingle({ title = "", value = "" }) {
                         paddingLeft: "40px",
                         paddingRight: "40px",
                         paddingBottom: "10px",
+                        minHeight: "260px"
                     }}
                 >
                     <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>

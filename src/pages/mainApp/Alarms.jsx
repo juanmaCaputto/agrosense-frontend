@@ -10,6 +10,7 @@ export default function Alarms() {
             <AlarmParameter title="Humedad de Suelo Bajo" />
             <AlarmParameter title="Humedad Ambiente" />
             <AlarmParameter title="Temperatura Ambiente" />
+            <AlarmParameter title="Lluvia" />
             <Grid item xs={12} sm={5} />
             <Grid item xs={12} sm={2} sx={{ pt: 4, justifyContent: "flex-end" }}>
                 <Button size="medium" variant="contained" fullWidth>
