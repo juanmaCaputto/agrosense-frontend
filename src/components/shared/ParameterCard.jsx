@@ -13,7 +13,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
             xs={12}
             md={6}
             style={{
-                cursor: "pointer"
+                cursor: "pointer",
             }}
         >
             <ReactCardFlip isFlipped={isFlipped}>
@@ -31,7 +31,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                             paddingLeft: "40px",
                             paddingRight: "40px",
                             paddingBottom: "10px",
-                            minHeight: "260px"
+                            minHeight: "260px",
                         }}
                     >
                         <Grid container direction="row" sx={{ mt: 1, mb: 3 }}>
@@ -65,8 +65,12 @@ export default function ParameterCard({ title = "", value = "", children }) {
                                 }}
                             >
                                 <Typography
-                                    variant={isSmall ? "h3" : "h1"}
-                                    style={{ color: "#002F5D" }}
+                                    variant={isSmall ? "h2" : "h1"}
+                                    sx={
+                                        isSmall
+                                            ? { pt: 4, color: "#002F5D" }
+                                            : { color: "#002F5D" }
+                                    }
                                 >
                                     {value}
                                 </Typography>
@@ -85,7 +89,7 @@ export default function ParameterCard({ title = "", value = "", children }) {
                             backgroundColor: "#D8ECFF",
                             borderRadius: "15px",
                             padding: "15px",
-                            minHeight: "260px"
+                            minHeight: "260px",
                         }}
                     >
                         <Grid container direction="row">
