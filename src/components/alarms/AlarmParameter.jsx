@@ -194,18 +194,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
                     }
                 />
             </Grid>
-            <Grid item xs={12} sm={1.5}>
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={activar}
-                            onChange={() => handleSetActivar(!activar)}
-                        />
-                    }
-                    label="Activar"
-                />
-            </Grid>
-            <Grid item xs={12} sm={1.5}>
+            <Grid item xs={4} sm={1.5}>
                 <FormControlLabel
                     control={
                         <Checkbox
@@ -214,6 +203,17 @@ export default function AlarmParameter({ title = "", type = "" }) {
                         />
                     }
                     label="Todos"
+                />
+            </Grid>
+            <Grid item xs={4} sm={1.5}>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={activar}
+                            onChange={() => handleSetActivar(!activar)}
+                        />
+                    }
+                    label="Activar"
                 />
             </Grid>
             {!loading && <AlarmCollapse todos={todos} values={sensorsValues} />}
