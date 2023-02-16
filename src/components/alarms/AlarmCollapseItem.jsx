@@ -33,7 +33,11 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        setMinimo(e.target.value);
+        if (e.target.value === "") {
+            setMinimo(0);
+        } else {
+            setMinimo(e.target.value);
+        }
     };
 
     const handleMaximo = (e) => {
@@ -45,7 +49,11 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        setMaximo(e.target.value);
+        if (e.target.value === "") {
+            setMaximo(0);
+        } else {
+            setMaximo(e.target.value);
+        }
     };
 
     return (
@@ -77,6 +85,7 @@ export default function AlarmCollapseItem({
             >
                 <TextField
                     size="small"
+                    type="number"
                     label="Mínimo"
                     variant="outlined"
                     value={minimo}
@@ -96,6 +105,7 @@ export default function AlarmCollapseItem({
             >
                 <TextField
                     size="small"
+                    type="number"
                     label="Máximo"
                     variant="outlined"
                     value={maximo}

@@ -93,7 +93,11 @@ export default function AlarmParameter({ title = "", type = "" }) {
     };
 
     const handleSetMinimo = (e) => {
-        setMinimo(e.target.value);
+        if (e.target.value === "") {
+            setMinimo(0);
+        } else {
+            setMinimo(e.target.value);
+        }
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.lowerValue = e.target.value;
@@ -103,7 +107,11 @@ export default function AlarmParameter({ title = "", type = "" }) {
     };
 
     const handleSetMaximo = (e) => {
-        setMaximo(e.target.value);
+        if (e.target.value === "") {
+            setMaximo(0);
+        } else {
+            setMaximo(e.target.value);
+        }
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.upperValue = e.target.value;
@@ -154,6 +162,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
             >
                 <TextField
                     size="small"
+                    type="number"
                     label="Mínimo"
                     variant="outlined"
                     value={minimo}
@@ -173,6 +182,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
             >
                 <TextField
                     size="small"
+                    type="number"
                     label="Máximo"
                     variant="outlined"
                     value={maximo}
