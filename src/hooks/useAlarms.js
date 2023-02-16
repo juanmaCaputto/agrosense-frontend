@@ -15,8 +15,8 @@ export function useAlarms() {
             )
         );
         console.log(alarms);
-        ctx.setLoading(false);
         ctx.setAlarms([...alarms]);
+        ctx.setLoading(false);
     };
 
     const setAlarms = async (newAlarms) => {
