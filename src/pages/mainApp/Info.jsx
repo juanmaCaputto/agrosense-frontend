@@ -5,6 +5,7 @@ import { useSensors } from "../../hooks/useSensors";
 import DeviceAndSensors from "../../components/info/deviceAndSensors";
 import { useContext } from "react";
 import InfoContext from "../../context/InfoContext";
+import Loading from "react-fullscreen-loading";
 
 export default function Info() {
     const { getSensorNames } = useSensors();
@@ -32,7 +33,9 @@ export default function Info() {
                     Dispositivos Disponibles
                 </Typography>
             </Grid>
-            {!ctx.loading ? (
+            {ctx.loading ? (
+                <Loading loading background="#FFFFFF" loaderColor="#3498db" />
+            ) : (
                 ctx.devices.map((e) => {
                     return (
                         <DeviceAndSensors
@@ -42,8 +45,6 @@ export default function Info() {
                         />
                     );
                 })
-            ) : (
-                <></>
             )}
         </InfoCard>
     );

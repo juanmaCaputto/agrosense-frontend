@@ -18,6 +18,15 @@ export function getLatestValues() {
     });
 }
 
+export function getAlarm({
+    idSensor = ""
+}) {
+    return request({
+        params: `/AlarmasLoadState?idSensor=${idSensor}`,
+        method: "GET",
+    });
+}
+
 export function setAlarm({
     idSensor = "",
     lowerValue = "",
@@ -26,7 +35,7 @@ export function setAlarm({
 }) {
     return request({
         params: `/AlarmasSaveState?idSensor=${idSensor}&lowerValue=${lowerValue}&upperValue=${upperValue}&enabled=${enabled}`,
-        method: "´POST",
+        method: "POST",
     });
 }
 

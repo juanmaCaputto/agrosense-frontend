@@ -82,6 +82,7 @@ export function useSensors() {
                 luz,
             });
         });
+        ctxRealtime.setLoading(false);
     };
 
     const getValuesParameter = async ({
@@ -98,10 +99,6 @@ export function useSensors() {
         );
         console.log(sensorData);
         return [...sensorData];
-    };
-
-    const getAlarms = async () => {
-        
     };
 
     return { getSensorNames, getValuesRealTime, getValuesParameter };

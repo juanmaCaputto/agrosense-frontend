@@ -24,6 +24,8 @@ const RealtimeContext = createContext({
         },
     },
     setDatos: () => {},
+    loading: true,
+    setLoading: () => {},
     alreadyChecked: false,
     setAlreadyChecked: () => {},
 });
@@ -51,6 +53,7 @@ export function RealtimeContextProvider({ children }) {
         },
     });
     const [alreadyChecked, setAlreadyChecked] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     return (
         <RealtimeContext.Provider
@@ -59,6 +62,8 @@ export function RealtimeContextProvider({ children }) {
                 setPromedios,
                 datos,
                 setDatos,
+                loading,
+                setLoading,
                 alreadyChecked,
                 setAlreadyChecked,
             }}

@@ -9,19 +9,22 @@ export async function request({
     console.log(params);
 
     let headers = {
-        "Content-Type": "application/JSON"
+        "Content-Type": "application/JSON",
     };
 
     try {
         const response = await fetch(`${url_base}${params}`, {
             method,
             headers,
-            body: data ? JSON.stringify(data) : undefined,
+            body: data,
         });
         const response_json = await response.json();
-
         return response_json;
     } catch (error) {
-        throw error;
+        if (error.message === "Unexpected end of JSON input") {
+            return {};
+        } else {
+            throw error;
+        }
     }
 }
