@@ -46,13 +46,13 @@ export function Footer() {
                                 variant="body2"
                                 style={{ color: "white" }}
                             >
-                                Agrosense Test
+                                Agrosense
                             </Typography>
                             <Typography
                                 variant="caption"
                                 style={{ color: "white" }}
                             >
-                                v0.1
+                                v1.0
                                 <br />
                                 <br />
                             </Typography>
