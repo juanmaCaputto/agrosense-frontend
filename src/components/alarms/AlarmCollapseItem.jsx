@@ -14,14 +14,18 @@ export default function AlarmCollapseItem({
 
     const [minimo, setMinimo] = useState(0);
     const [maximo, setMaximo] = useState(0);
+    const [loaded, setLoaded] = useState(false);
 
-    const setInitialValues = () => {
-        setMinimo(min);
-        setMaximo(max);
+    const loadValues = () => {
+        if (!loaded) {
+            setMinimo(min);
+            setMaximo(max);
+            setLoaded(true);
+        }
     };
 
     useEffect(() => {
-        setInitialValues();
+        loadValues();
     });
 
     const handleMinimo = (e) => {

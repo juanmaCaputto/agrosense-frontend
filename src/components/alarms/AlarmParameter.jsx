@@ -12,7 +12,10 @@ import { sensorsNames } from "../../util/constants/SensorsName";
 import { sensorTypes } from "../../util/constants/sensorTypes";
 import AlarmCollapse from "./AlarmCollapse";
 
-export default function AlarmParameter({ title = "", type = "" }) {
+export default function AlarmParameter({
+    title = "",
+    type = "",
+}) {
     const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     const ctx = useContext(AlarmsContext);
 
@@ -22,64 +25,72 @@ export default function AlarmParameter({ title = "", type = "" }) {
     const [activar, setActivar] = useState(true);
     const [todos, setTodos] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [loaded, setLoaded] = useState(false);
+
+    const loadValues = () => {
+        if (!loaded) {
+            let sensors = [];
+            switch (type) {
+                case sensorTypes.HUM_SUELO_H:
+                    sensors.push(sensorsNames.HUM_SUELO_H_1);
+                    sensors.push(sensorsNames.HUM_SUELO_H_2);
+                    break;
+                case sensorTypes.HUM_SUELO_M:
+                    sensors.push(sensorsNames.HUM_SUELO_M_1);
+                    sensors.push(sensorsNames.HUM_SUELO_M_2);
+                    break;
+                case sensorTypes.HUM_SUELO_L:
+                    sensors.push(sensorsNames.HUM_SUELO_L_1);
+                    sensors.push(sensorsNames.HUM_SUELO_L_2);
+                    break;
+                case sensorTypes.HUM_AMBIENTE:
+                    sensors.push(sensorsNames.HUM_AMBIENTE_1);
+                    sensors.push(sensorsNames.HUM_AMBIENTE_2);
+                    break;
+                case sensorTypes.TEMP_AMBIENTE:
+                    sensors.push(sensorsNames.TEMP_AMBIENTE_1);
+                    sensors.push(sensorsNames.TEMP_AMBIENTE_2);
+                    break;
+                case sensorTypes.LLUVIA:
+                    sensors.push(sensorsNames.LLUVIA_1);
+                    sensors.push(sensorsNames.LLUVIA_2);
+                    break;
+                default: //
+            }
+            sensors = sensors.map((s) => {
+                let newSensor = {};
+                ctx.alarms.forEach((a) => {
+                    if (a.idSensor === s) {
+                        newSensor = a;
+                    }
+                });
+                return newSensor;
+            });
+            setSensorsValues(sensors);
+            if (
+                sensors[0].data.upperValue === sensors[1].data.upperValue &&
+                sensors[0].data.lowerValue === sensors[1].data.lowerValue
+            ) {
+                setMaximo(sensors[0].data.upperValue);
+                setMinimo(sensors[0].data.lowerValue);
+                setTodos(true);
+            }
+            if (
+                sensors[0].data.enabled === 1 ||
+                sensors[1].data.enabled === 1
+            ) {
+                setActivar(true);
+            } else {
+                setActivar(false);
+            }
+            setLoading(false);
+            setLoaded(true);
+        }
+    };
 
     useEffect(() => {
-        let sensors = [];
-        switch (type) {
-            case sensorTypes.HUM_SUELO_H:
-                sensors.push(sensorsNames.HUM_SUELO_H_1);
-                sensors.push(sensorsNames.HUM_SUELO_H_2);
-                break;
-            case sensorTypes.HUM_SUELO_M:
-                sensors.push(sensorsNames.HUM_SUELO_M_1);
-                sensors.push(sensorsNames.HUM_SUELO_M_2);
-                break;
-            case sensorTypes.HUM_SUELO_L:
-                sensors.push(sensorsNames.HUM_SUELO_L_1);
-                sensors.push(sensorsNames.HUM_SUELO_L_2);
-                break;
-            case sensorTypes.HUM_AMBIENTE:
-                sensors.push(sensorsNames.HUM_AMBIENTE_1);
-                sensors.push(sensorsNames.HUM_AMBIENTE_2);
-                break;
-            case sensorTypes.TEMP_AMBIENTE:
-                sensors.push(sensorsNames.TEMP_AMBIENTE_1);
-                sensors.push(sensorsNames.TEMP_AMBIENTE_2);
-                break;
-            case sensorTypes.LLUVIA:
-                sensors.push(sensorsNames.LLUVIA_1);
-                sensors.push(sensorsNames.LLUVIA_2);
-                break;
-            default: //
-        }
-        sensors = sensors.map((s) => {
-            let newSensor = {};
-            ctx.alarms.forEach((a) => {
-                if (a.idSensor === s) {
-                    newSensor = a;
-                }
-            });
-            return newSensor;
-        });
-        setSensorsValues(sensors);
-        if (
-            sensors[0].data.upperValue === sensors[1].data.upperValue &&
-            sensors[0].data.lowerValue === sensors[1].data.lowerValue
-        ) {
-            setMaximo(sensors[0].data.upperValue);
-            setMinimo(sensors[0].data.lowerValue);
-            setTodos(true);
-        } else {
-            setTodos(false);
-        }
-        if (sensors[0].data.enabled === 1 || sensors[1].data.enabled === 1) {
-            setActivar(true);
-        } else {
-            setActivar(false);
-        }
-
-        setLoading(false);
-    }, [ctx.alarms, type]);
+        loadValues();
+    });
 
     const onChangeTodos = (v) => {
         setSensorsValues(
@@ -216,7 +227,13 @@ export default function AlarmParameter({ title = "", type = "" }) {
                     label="Activar"
                 />
             </Grid>
-            {!loading && <AlarmCollapse todos={todos} values={sensorsValues} />}
+            {!loading && (
+                <AlarmCollapse
+                    todos={todos}
+                    values={sensorsValues}
+                    loaded={loaded}
+                />
+            )}
         </Grid>
     );
 }

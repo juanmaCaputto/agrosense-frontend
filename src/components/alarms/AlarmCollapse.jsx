@@ -1,7 +1,11 @@
 import { Collapse, Divider, Grid } from "@mui/material";
 import AlarmCollapseItem from "./AlarmCollapseItem";
 
-export default function AlarmCollapse({ todos = false, values = [] }) {
+export default function AlarmCollapse({
+    todos = false,
+    values = [],
+}) {
+
     return (
         <Grid item xs={12}>
             <Collapse in={!todos}>

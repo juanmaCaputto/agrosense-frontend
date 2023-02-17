@@ -31,7 +31,7 @@ export default function Alarms() {
 
     return (
         <InfoCard minWidth="100%" title="Seteo de Alarmas">
-            {ctx.loading ? (
+            {ctx.loading && !ctx.alreadyChecked ? (
                 <Loading loading background="#FFFFFF" loaderColor="#3498db" />
             ) : (
                 <>
