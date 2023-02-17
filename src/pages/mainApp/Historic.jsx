@@ -48,16 +48,29 @@ export default function Historic() {
 
     const { getValuesParameter } = useSensors();
 
+    const transformToBackend = (list) => {
+        return list.map((s) => {
+            let newSensor = s;
+            sensorValues.forEach((e) => {
+                if (s === e.label) {
+                    newSensor = e.value;
+                }
+            });
+            return newSensor;
+        });
+    };
+
     const handleChangeParameters = async (event) => {
         setError("");
         setParameters(event.target.value);
+
         if (
             event.target.value.length > 0 &&
             dateStart !== "" &&
             dateEnd !== ""
         ) {
             await getValuesParameter({
-                sensorsId: event.target.value,
+                sensorsId: transformToBackend(event.target.value),
                 start: formatDatePicker(dateStart),
                 end: formatDatePicker(dateEnd),
             })
@@ -141,10 +154,10 @@ export default function Historic() {
                         {sensorValues.map((i, index) => {
                             if (i.value !== "") {
                                 return (
-                                    <MenuItem value={i.value} key={index}>
+                                    <MenuItem value={i.label} key={index}>
                                         <Checkbox
                                             checked={
-                                                parameters.indexOf(i.value) > -1
+                                                parameters.indexOf(i.label) > -1
                                             }
                                         />
                                         {i.label}

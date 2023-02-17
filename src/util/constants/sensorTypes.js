@@ -1,4 +1,5 @@
 export const sensorTypes = {
+    HUM_SUELO: "HUM_SUELO",
     HUM_SUELO_H: "HUM_SUELO_H",
     HUM_SUELO_M: "HUM_SUELO_M",
     HUM_SUELO_L: "HUM_SUELO_L",
