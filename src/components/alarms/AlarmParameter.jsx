@@ -23,6 +23,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
     const [todos, setTodos] = useState(false);
     const [loading, setLoading] = useState(true);
     const [loaded, setLoaded] = useState(false);
+    const [loadedCol, setLoadedCol] = useState(false);
 
     const loadValues = () => {
         if (!loaded) {
@@ -90,6 +91,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
     });
 
     const onChangeTodos = (v) => {
+        setTodos(v);
         setSensorsValues(
             sensorsValues.map((e) => {
                 e.data.upperValue = maximo;
@@ -97,11 +99,12 @@ export default function AlarmParameter({ title = "", type = "" }) {
                 return e;
             })
         );
-        setTodos(v);
+        setLoadedCol(false);
     };
 
     const handleSetMinimo = (e) => {
         setMinimo(e.target.value);
+        setLoadedCol(false);
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.lowerValue = e.target.value;
@@ -113,11 +116,18 @@ export default function AlarmParameter({ title = "", type = "" }) {
     const handleMinimoBlur = () => {
         if (minimo === "") {
             setMinimo(0);
+            setSensorsValues(
+                sensorsValues.map((s) => {
+                    s.data.lowerValue = 0;
+                    return s;
+                })
+            );
         }
     };
 
     const handleSetMaximo = (e) => {
         setMaximo(e.target.value);
+        setLoadedCol(false);
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.upperValue = e.target.value;
@@ -129,6 +139,12 @@ export default function AlarmParameter({ title = "", type = "" }) {
     const handleMaximoBlur = () => {
         if (maximo === "") {
             setMaximo(0);
+            setSensorsValues(
+                sensorsValues.map((s) => {
+                    s.data.upperValue = 0;
+                    return s;
+                })
+            );
         }
     };
 
@@ -234,7 +250,8 @@ export default function AlarmParameter({ title = "", type = "" }) {
                 <AlarmCollapse
                     todos={todos}
                     values={sensorsValues}
-                    loaded={loaded}
+                    loaded={loadedCol}
+                    setLoaded={setLoadedCol}
                 />
             )}
         </Grid>

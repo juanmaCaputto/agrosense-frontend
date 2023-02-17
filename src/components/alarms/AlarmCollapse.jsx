@@ -4,8 +4,9 @@ import AlarmCollapseItem from "./AlarmCollapseItem";
 export default function AlarmCollapse({
     todos = false,
     values = [],
+    loaded = false,
+    setLoaded,
 }) {
-
     return (
         <Grid item xs={12}>
             <Collapse in={!todos}>
@@ -24,6 +25,8 @@ export default function AlarmCollapse({
                         <AlarmCollapseItem
                             key={e}
                             title={e}
+                            loaded={loaded}
+                            setLoaded={setLoaded}
                             sensorName={values[e - 1].idSensor}
                             max={values[e - 1].data.upperValue}
                             min={values[e - 1].data.lowerValue}

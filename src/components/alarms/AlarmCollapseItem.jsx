@@ -5,6 +5,8 @@ import AlarmsContext from "../../context/AlarmsContext";
 
 export default function AlarmCollapseItem({
     title = 0,
+    loaded = false,
+    setLoaded,
     sensorName = "",
     min = 0,
     max = 0,
@@ -14,14 +16,13 @@ export default function AlarmCollapseItem({
 
     const [minimo, setMinimo] = useState(0);
     const [maximo, setMaximo] = useState(0);
-    const [loaded, setLoaded] = useState(false);
 
     const loadValues = () => {
         if (!loaded) {
             setMinimo(min);
             setMaximo(max);
-            setLoaded(true);
         }
+        setLoaded(true);
     };
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function AlarmCollapseItem({
     });
 
     const handleMinimo = (e) => {
+        setMinimo(e.target.value);
         ctx.setAlarms(
             ctx.alarms.map((a) => {
                 if (a.idSensor === sensorName) {
@@ -37,7 +39,6 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        setMinimo(e.target.value);
     };
 
     const handleMinimoBlur = () => {
@@ -47,6 +48,7 @@ export default function AlarmCollapseItem({
     };
 
     const handleMaximo = (e) => {
+        setMaximo(e.target.value);
         ctx.setAlarms(
             ctx.alarms.map((a) => {
                 if (a.idSensor === sensorName) {
@@ -55,7 +57,6 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        setMaximo(e.target.value);
     };
 
     const handleMaximoBlur = () => {
