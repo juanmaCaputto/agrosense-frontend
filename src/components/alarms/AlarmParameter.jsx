@@ -125,6 +125,12 @@ export default function AlarmParameter({ title = "", type = "" }) {
         }
     };
 
+    const handleMinimoFocus = (e) => {
+        if (e.target.value === "0") {
+            setMinimo("");
+        }
+    };
+
     const handleSetMaximo = (e) => {
         setMaximo(e.target.value);
         setLoadedCol(false);
@@ -145,6 +151,12 @@ export default function AlarmParameter({ title = "", type = "" }) {
                     return s;
                 })
             );
+        }
+    };
+
+    const handleMaximoFocus = (e) => {
+        if (e.target.value === "0") {
+            setMaximo("");
         }
     };
 
@@ -196,6 +208,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
                     value={minimo}
                     onChange={handleSetMinimo}
                     onBlur={handleMinimoBlur}
+                    onFocus={handleMinimoFocus}
                     sx={
                         isSmall
                             ? { width: "100%" }
@@ -217,6 +230,7 @@ export default function AlarmParameter({ title = "", type = "" }) {
                     value={maximo}
                     onChange={handleSetMaximo}
                     onBlur={handleMaximoBlur}
+                    onFocus={handleMaximoFocus}
                     sx={
                         isSmall
                             ? { width: "100%" }
