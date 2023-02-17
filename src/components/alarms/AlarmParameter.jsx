@@ -12,10 +12,7 @@ import { sensorsNames } from "../../util/constants/SensorsName";
 import { sensorTypes } from "../../util/constants/sensorTypes";
 import AlarmCollapse from "./AlarmCollapse";
 
-export default function AlarmParameter({
-    title = "",
-    type = "",
-}) {
+export default function AlarmParameter({ title = "", type = "" }) {
     const isSmall = useMediaQuery({ query: "(max-width: 600px)" });
     const ctx = useContext(AlarmsContext);
 
@@ -104,11 +101,7 @@ export default function AlarmParameter({
     };
 
     const handleSetMinimo = (e) => {
-        if (e.target.value === "") {
-            setMinimo(0);
-        } else {
-            setMinimo(e.target.value);
-        }
+        setMinimo(e.target.value);
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.lowerValue = e.target.value;
@@ -117,18 +110,26 @@ export default function AlarmParameter({
         );
     };
 
-    const handleSetMaximo = (e) => {
-        if (e.target.value === "") {
-            setMaximo(0);
-        } else {
-            setMaximo(e.target.value);
+    const handleMinimoBlur = () => {
+        if (minimo === "") {
+            setMinimo(0);
         }
+    };
+
+    const handleSetMaximo = (e) => {
+        setMaximo(e.target.value);
         setSensorsValues(
             sensorsValues.map((s) => {
                 s.data.upperValue = e.target.value;
                 return s;
             })
         );
+    };
+
+    const handleMaximoBlur = () => {
+        if (maximo === "") {
+            setMaximo(0);
+        }
     };
 
     const handleSetActivar = (event) => {
@@ -178,6 +179,7 @@ export default function AlarmParameter({
                     variant="outlined"
                     value={minimo}
                     onChange={handleSetMinimo}
+                    onBlur={handleMinimoBlur}
                     sx={
                         isSmall
                             ? { width: "100%" }
@@ -198,6 +200,7 @@ export default function AlarmParameter({
                     variant="outlined"
                     value={maximo}
                     onChange={handleSetMaximo}
+                    onBlur={handleMaximoBlur}
                     sx={
                         isSmall
                             ? { width: "100%" }

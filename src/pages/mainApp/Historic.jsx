@@ -1,4 +1,5 @@
 import {
+    Alert,
     Checkbox,
     Divider,
     FormControl,
@@ -43,54 +44,70 @@ export default function Historic() {
     const [dateEnd, setDateEnd] = useState("");
     const [scale, setScale] = useState("day");
     const [datasets, setDatasets] = useState([]);
+    const [error, setError] = useState("");
 
     const { getValuesParameter } = useSensors();
 
     const handleChangeParameters = async (event) => {
+        setError("");
         setParameters(event.target.value);
         if (
             event.target.value.length > 0 &&
             dateStart !== "" &&
             dateEnd !== ""
         ) {
-            setDatasets(
-                await getValuesParameter({
-                    sensorsId: event.target.value,
-                    start: formatDatePicker(dateStart),
-                    end: formatDatePicker(dateEnd),
+            await getValuesParameter({
+                sensorsId: event.target.value,
+                start: formatDatePicker(dateStart),
+                end: formatDatePicker(dateEnd),
+            })
+                .then((res) => {
+                    setDatasets(res);
                 })
-            );
+                .catch((e) => {
+                    setError(e.message);
+                });
         }
     };
 
     const handleChangeDateStart = async (value) => {
+        setError("");
         setDateStart(value);
         if (parameters.length > 0 && value !== "" && dateEnd !== "") {
-            setDatasets(
-                await getValuesParameter({
-                    sensorsId: parameters,
-                    start: formatDatePicker(value),
-                    end: formatDatePicker(dateEnd),
+            await getValuesParameter({
+                sensorsId: parameters,
+                start: formatDatePicker(value),
+                end: formatDatePicker(dateEnd),
+            })
+                .then((res) => {
+                    setDatasets(res);
                 })
-            );
+                .catch((e) => {
+                    setError(e.message);
+                });
         }
     };
 
     const handleChangeDateEnd = async (value) => {
+        setError("");
         setDateEnd(value);
         if (parameters.length > 0 && dateStart !== "" && value !== "") {
-            setDatasets(
-                await getValuesParameter({
-                    sensorsId: parameters,
-                    start: formatDatePicker(dateStart),
-                    end: formatDatePicker(value),
+            await getValuesParameter({
+                sensorsId: parameters,
+                start: formatDatePicker(dateStart),
+                end: formatDatePicker(value),
+            })
+                .then((res) => {
+                    setDatasets(res);
                 })
-            );
+                .catch((e) => {
+                    setError(e.message);
+                });
         }
     };
 
     return (
-        <InfoCard minWidth="100%" width="100%" title="Histórico de Sensores">
+        <InfoCard minWidth="100%" title="Histórico de Sensores">
             <Grid item xs={12} sm={4}>
                 <FormControl
                     variant="outlined"
@@ -104,18 +121,32 @@ export default function Historic() {
                     <InputLabel>Parámetro</InputLabel>
                     <Select
                         defaultValue=""
-                        label="Estado"
                         multiple
-                        input={<OutlinedInput label="Estado" />}
+                        input={<OutlinedInput />}
                         renderValue={(selected) => selected.join(", ")}
                         onChange={handleChangeParameters}
                         value={parameters}
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 300,
+                                },
+                            },
+                        }}
+                        style={{
+                            minWidth: "100%",
+                            maxWidth: "200px",
+                        }}
                     >
                         {sensorValues.map((i, index) => {
                             if (i.value !== "") {
                                 return (
                                     <MenuItem value={i.value} key={index}>
-                                    <Checkbox checked={parameters.indexOf(i.value) > -1} />
+                                        <Checkbox
+                                            checked={
+                                                parameters.indexOf(i.value) > -1
+                                            }
+                                        />
                                         {i.label}
                                     </MenuItem>
                                 );
@@ -139,6 +170,11 @@ export default function Historic() {
                     setDate={handleChangeDateEnd}
                     title={"Fin"}
                 />
+                {error !== "" && (
+                    <Alert size="small" severity="error" sx={{ mt: 1 }}>
+                        {error}
+                    </Alert>
+                )}
             </Grid>
             {isSmall && <Grid item xs={1} />}
             <Grid

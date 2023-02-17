@@ -104,7 +104,7 @@ export default function RealTime() {
                         />
                     </ParameterCard>
                     <ParameterCard
-                        title="Temperatura"
+                        title="Temperatura Ambiente"
                         value={`${ctx.promedios.tempAmbiente}°C`}
                     >
                         <BackCard

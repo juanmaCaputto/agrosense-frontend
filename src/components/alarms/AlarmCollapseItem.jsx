@@ -37,10 +37,12 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        if (e.target.value === "") {
+        setMinimo(e.target.value);
+    };
+
+    const handleMinimoBlur = () => {
+        if (minimo === "") {
             setMinimo(0);
-        } else {
-            setMinimo(e.target.value);
         }
     };
 
@@ -53,10 +55,12 @@ export default function AlarmCollapseItem({
                 return a;
             })
         );
-        if (e.target.value === "") {
+        setMaximo(e.target.value);
+    };
+
+    const handleMaximoBlur = () => {
+        if (maximo === "") {
             setMaximo(0);
-        } else {
-            setMaximo(e.target.value);
         }
     };
 
@@ -94,6 +98,7 @@ export default function AlarmCollapseItem({
                     variant="outlined"
                     value={minimo}
                     onChange={handleMinimo}
+                    onBlur={handleMinimoBlur}
                     sx={
                         isSmall
                             ? { width: "100%" }
@@ -114,6 +119,7 @@ export default function AlarmCollapseItem({
                     variant="outlined"
                     value={maximo}
                     onChange={handleMaximo}
+                    onBlur={handleMaximoBlur}
                     sx={
                         isSmall
                             ? { width: "100%" }

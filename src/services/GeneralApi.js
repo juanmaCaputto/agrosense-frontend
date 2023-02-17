@@ -19,12 +19,11 @@ export async function request({
             body: data,
         });
         const response_json = await response.json();
+        if (!response.ok) {
+            throw Error(response_json.message);
+        }
         return response_json;
     } catch (error) {
-        if (error.message === "Unexpected end of JSON input") {
-            return {};
-        } else {
-            throw error;
-        }
+        throw error;
     }
 }

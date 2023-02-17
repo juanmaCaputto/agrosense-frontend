@@ -90,15 +90,24 @@ export function useSensors() {
         start = "",
         end = "",
     }) => {
-        const sensorData = await Promise.all(
-            sensorsId.map((sensorId) =>
-                getHistoricSensorData({ start, end, sensorId }).then((res) => {
-                    return { id: sensorId, data: res.data };
-                })
-            )
-        );
-        console.log(sensorData);
-        return [...sensorData];
+        try {
+            const sensorData = await Promise.all(
+                sensorsId.map((sensorId) =>
+                    getHistoricSensorData({ start, end, sensorId }).then(
+                        (res) => {
+                            return { id: sensorId, data: res.data };
+                        }
+                    )
+                )
+            );
+            console.log(sensorData);
+            return [...sensorData];
+        } catch (e) {
+            if (e.message === "Internal Server Error") {
+                e.message = "Petición devolvió demasiados elementos.";
+            }
+            throw e;
+        }
     };
 
     return { getSensorNames, getValuesRealTime, getValuesParameter };
