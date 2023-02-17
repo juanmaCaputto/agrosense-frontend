@@ -88,7 +88,7 @@ export default function Historic() {
         setDateStart(value);
         if (parameters.length > 0 && value !== "" && dateEnd !== "") {
             await getValuesParameter({
-                sensorsId: parameters,
+                sensorsId: transformToBackend(parameters),
                 start: formatDatePicker(value),
                 end: formatDatePicker(dateEnd),
             })
@@ -106,7 +106,7 @@ export default function Historic() {
         setDateEnd(value);
         if (parameters.length > 0 && dateStart !== "" && value !== "") {
             await getValuesParameter({
-                sensorsId: parameters,
+                sensorsId: transformToBackend(parameters),
                 start: formatDatePicker(dateStart),
                 end: formatDatePicker(value),
             })
