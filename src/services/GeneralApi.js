@@ -7,6 +7,7 @@ export async function request({
     data = undefined,
 }) {
     console.log(params);
+    console.log(data);
 
     let headers = {
         "Content-Type": "application/JSON",
@@ -22,6 +23,7 @@ export async function request({
         if (!response.ok) {
             throw Error(response_json.message);
         }
+        console.log(response_json)
         return response_json;
     } catch (error) {
         throw error;

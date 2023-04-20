@@ -8,6 +8,7 @@ import {
     WiNightAltRain,
 } from "weather-icons-react";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
+import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 
 export function useWeather() {
     const ctx = useContext(RealtimeContext);
@@ -40,7 +41,7 @@ export function useWeather() {
         } else if (
             ctx.promedios.luz > 11 &&
             ctx.promedios.luz < 1000 &&
-            !ctx.promedios.lluvia
+            ctx.promedios.lluvia
         ) {
             return (
                 <WiRain
@@ -59,6 +60,13 @@ export function useWeather() {
                     style={{ display: "block", width: "100%", height: "190px" }}
                 />
             );
+        } else {
+            return (
+                <SportsKabaddiIcon
+                    style={{ display: "block", width: "100%", height: "190px" }}
+                />
+            );
+            
         }
     };
 
